@@ -1,0 +1,98 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["auth", "public"]
+}
+
+
+model buddy_requests {
+  id                                      String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sender_id                               String       @db.Uuid
+  receiver_id                             String       @db.Uuid
+  travel_plan_id                          String       @db.Uuid
+  message                                 String?
+  status                                  String?      @default("pending")
+  created_at                              DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at                              DateTime?    @default(now()) @db.Timestamptz(6)
+  travel_plans                            travel_plans @relation(fields: [travel_plan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([sender_id, travel_plan_id])
+  @@schema("public")
+}
+
+model profiles {
+  id                      String    @id @db.Uuid
+  full_name               String?
+  bio                     String?
+  avatar_url              String?
+  current_location        String?
+  is_admin                Boolean?  @default(false)
+  is_premium              Boolean?  @default(false)
+  is_verified             Boolean?  @default(false)
+  subscription_tier       String?
+  subscription_expires_at DateTime? @db.Timestamptz(6)
+  stripe_customer_id      String?
+  created_at              DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime? @default(now()) @db.Timestamptz(6)
+  profile_picture         String?
+  email                   String    @unique @default("example@gmail.com")
+  visited_countries       String[]
+  travel_interests        String[]
+  isDeleted               Boolean   @default(false)
+  userInfo                userInfo?
+
+  @@schema("public")
+}
+
+model reviews {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reviewer_id    String        @db.Uuid
+  rating         Int
+  comment        String?
+  travel_plan_id String?       @db.Uuid
+  created_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  travel_plans   travel_plans? @relation(fields: [travel_plan_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model travel_plans {
+  id                String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id           String           @db.Uuid
+  title             String
+  destination       Json?
+  start_date        DateTime         @db.Date
+  end_date          DateTime         @db.Date
+  description       String?
+  budget_min        Int?
+  budget_max        Int?
+  looking_for_buddy Boolean?         @default(true)
+  max_buddies       Int?             @default(1)
+  status            String?          @default("active")
+  created_at        DateTime?        @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime?        @default(now()) @db.Timestamptz(6)
+  travel_type       String[]
+  buddy_requests    buddy_requests[]
+  reviews           reviews[]
+
+  @@schema("public")
+}
+
+model userInfo {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  password   String?
+  isGoogle   Boolean?
+  isDeleted  Boolean  @default(false)
+  userId     String   @unique @db.Uuid
+  profiles   profiles @relation(fields: [userId], references: [id], onDelete: NoAction)
+
+  @@schema("public")
+}

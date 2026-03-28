@@ -1,0 +1,25 @@
+{
+  "imports": {
+    "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.5.0",
+    "@prisma/client": "npm:@prisma/client@^7.5.0",
+    "@supabase/ssr": "npm:@supabase/ssr@^0.9.0",
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@^2.100.0",
+    "hono": "npm:hono@^4.12.9",
+    "pg": "npm:pg@^8.20.0",
+    "prisma": "npm:prisma@^7.5.0",
+    "supabase": "npm:supabase@^2.84.0"
+  },
+  "tasks": {
+    "start": "deno run --allow-net --allow-env --env=.env src/server.ts",
+    "dev": "deno run --watch --allow-net --allow-env --env=.env src/server.ts",
+    "db:generate": "deno run -A --env=.env npm:prisma generate",
+    "db:push": "deno run -A --env=.env npm:prisma db push",
+    "db:migrate": "deno run -A --env=.env npm:prisma migrate dev",
+    "db:seed": "deno run -A --env=.env npm:prisma db seed",
+    "db:pull": "deno run -A --env=.env npm:prisma db pull"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  }
+}
