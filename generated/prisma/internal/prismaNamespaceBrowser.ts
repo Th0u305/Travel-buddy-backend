@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models.ts'
+export type * from './prismaNamespace.ts'
 
 export const Decimal = runtime.Decimal
 
@@ -51,7 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  buddy_requests: 'buddy_requests',
+  profiles: 'profiles',
+  reviews: 'reviews',
+  travel_plans: 'travel_plans',
+  country_lists: 'country_lists'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +72,118 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const Buddy_requestsScalarFieldEnum = {
+  id: 'id',
+  sender_id: 'sender_id',
+  receiver_id: 'receiver_id',
+  travel_plan_id: 'travel_plan_id',
+  message: 'message',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Buddy_requestsScalarFieldEnum = (typeof Buddy_requestsScalarFieldEnum)[keyof typeof Buddy_requestsScalarFieldEnum]
+
+
+export const ProfilesScalarFieldEnum = {
+  id: 'id',
+  bio: 'bio',
+  avatar_url: 'avatar_url',
+  current_location: 'current_location',
+  is_admin: 'is_admin',
+  is_premium: 'is_premium',
+  is_verified: 'is_verified',
+  subscription_tier: 'subscription_tier',
+  subscription_expires_at: 'subscription_expires_at',
+  stripe_customer_id: 'stripe_customer_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  profile_picture: 'profile_picture',
+  email: 'email',
+  visited_countries: 'visited_countries',
+  travel_interests: 'travel_interests',
+  isDeleted: 'isDeleted',
+  full_name: 'full_name',
+  phone: 'phone',
+  providers: 'providers',
+  is_password: 'is_password'
+} as const
+
+export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
+
+
+export const ReviewsScalarFieldEnum = {
+  id: 'id',
+  reviewer_id: 'reviewer_id',
+  rating: 'rating',
+  comment: 'comment',
+  travel_plan_id: 'travel_plan_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ReviewsScalarFieldEnum = (typeof ReviewsScalarFieldEnum)[keyof typeof ReviewsScalarFieldEnum]
+
+
+export const Travel_plansScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  title: 'title',
+  start_date: 'start_date',
+  end_date: 'end_date',
+  description: 'description',
+  min_budget: 'min_budget',
+  max_budget: 'max_budget',
+  looking_for_buddy: 'looking_for_buddy',
+  max_buddies: 'max_buddies',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  travel_type: 'travel_type',
+  image: 'image',
+  tags: 'tags',
+  country: 'country',
+  city: 'city'
+} as const
+
+export type Travel_plansScalarFieldEnum = (typeof Travel_plansScalarFieldEnum)[keyof typeof Travel_plansScalarFieldEnum]
+
+
+export const Country_listsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  iso2: 'iso2',
+  iso3: 'iso3',
+  phoneCode: 'phoneCode',
+  region: 'region'
+} as const
+
+export type Country_listsScalarFieldEnum = (typeof Country_listsScalarFieldEnum)[keyof typeof Country_listsScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

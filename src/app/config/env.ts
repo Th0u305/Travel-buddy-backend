@@ -7,6 +7,7 @@ interface EnvConfig {
     SUPABASE_URL: string;
     PUBLISHABLE_KEY: string;
     ANON_KEY : string
+    GOOGLE_REDIRECT_CALLBACK : string
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -18,7 +19,8 @@ const loadEnvVariables = (): EnvConfig => {
         "DATABASE_URL",
         "SUPABASE_URL",
         "PUBLISHABLE_KEY",
-        "ANON_KEY"
+        "ANON_KEY",
+        "GOOGLE_REDIRECT_CALLBACK"  
     ]
 
     requireEnvVariable.forEach((variable) => {
@@ -35,6 +37,7 @@ const loadEnvVariables = (): EnvConfig => {
         SUPABASE_URL: Deno.env.get("SUPABASE_URL") as string,
         PUBLISHABLE_KEY: Deno.env.get("PUBLISHABLE_KEY") as string,
         ANON_KEY: Deno.env.get("ANON_KEY") as string,
+        GOOGLE_REDIRECT_CALLBACK: Deno.env.get("GOOGLE_REDIRECT_CALLBACK") as string,
     }
 }
 

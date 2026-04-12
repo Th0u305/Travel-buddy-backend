@@ -46,7 +46,6 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
     );
 
     c.set("supabase", supabase as unknown as SupabaseClient);
-
     await next();
   };
 };

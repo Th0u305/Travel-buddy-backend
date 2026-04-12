@@ -10,8 +10,8 @@
     "supabase": "npm:supabase@^2.84.0"
   },
   "tasks": {
-    "start": "deno run --allow-net --allow-env --env=.env src/server.ts",
-    "dev": "deno run --watch --allow-net --allow-env --env=.env src/server.ts",
+    "start": "deno run -A --env=.env src/server.ts",
+    "dev": "deno run -A --watch --env=.env src/server.ts",
     "db:generate": "deno run -A --env=.env npm:prisma generate",
     "db:push": "deno run -A --env=.env npm:prisma db push",
     "db:migrate": "deno run -A --env=.env npm:prisma migrate dev",

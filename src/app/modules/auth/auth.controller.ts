@@ -3,56 +3,36 @@ import { authService } from "./auth.service.ts";
 
 const registerUser = catchAsync(
     async (c) => {
-        const data = await authService.registerUser(c)        
-        
-        if((data && 'status' in data && data.status === 422) && ("code" in data && data.code === "user_already_exists")) {
-            return c.json({
-                success : false,
-                message : "User already exists",
-                code : 422
-            })
-        }        
-        
+        const data = await authService.registerUser(c)
         if(data && "message" in data && data.message === "Supabase Client is undefined") {
             return c.json({
                 success : false,
                 message : "Internal Server Error",
-                code : 500
+                status : 500
             })
         }
-        
-        return c.json({
-            success : true,
-            message : "Account created successfully",
-            data : data
-        })
+        else{
+            return c.json({
+                data
+            })
+        }
     }
 )
 
 const logInUser = catchAsync(
     async (c) => {
-        const data = await authService.logInUser(c)        
-        
-        if ((data && 'status' in data && data.status === 422) && ("code" in data && data.code === "user_not_found")) {
-            return c.json({
-                success : false,
-                message : "User does not exist",
-                code : 404
-            })
-        }        
+        const data = await authService.logInUser(c)             
         
         if (data && "message" in data && data.message === "Supabase Client is undefined") {
             return c.json({
                 success : false,
                 message : "Internal Server Error",
-                code : 500
+                status : 500
             })
         }
         
         return c.json({
-            success : true,
-            message : "Logged in successfully",
-            data : data
+            data
         })
     }
 )
@@ -67,9 +47,32 @@ const logOutUser = catchAsync(
     }
 )
 
+const googleLogin = catchAsync(
+    async (c) => {
+        const data = await authService.googleLogin(c)        
+        return c.json({
+            success : true,
+            status : 200,
+            data : data
+        })
+    }
+)
+
+const resetPassword = catchAsync(
+    async (c) => {
+        const data = await authService.resetPassword(c)        
+        return c.json({
+            status : data?.status,
+            success : data?.success,
+            message : data?.message
+        })
+    }
+)
 
 export const authController = {
     registerUser,
     logInUser,
-    logOutUser
+    logOutUser,
+    googleLogin,
+    resetPassword,
 }

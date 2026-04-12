@@ -9,7 +9,7 @@ export const app = new Hono()
 app.use("/api/v1/*", cors({
   origin : envVars.FRONTEND_HOST,
   credentials : true,
-  allowMethods : ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowMethods : ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowHeaders : ["Content-Type", "Authorization"],
   exposeHeaders : ["Content-Length"],
   maxAge : 600,

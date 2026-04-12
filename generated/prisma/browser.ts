@@ -13,8 +13,32 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser.js'
+import * as Prisma from './internal/prismaNamespaceBrowser.ts'
 export { Prisma }
-export * as $Enums from './enums.js'
-export * from './enums.js';
-
+export * as $Enums from './enums.ts'
+export * from './enums.ts';
+/**
+ * Model buddy_requests
+ * 
+ */
+export type buddy_requests = Prisma.buddy_requestsModel
+/**
+ * Model profiles
+ * 
+ */
+export type profiles = Prisma.profilesModel
+/**
+ * Model reviews
+ * 
+ */
+export type reviews = Prisma.reviewsModel
+/**
+ * Model travel_plans
+ * 
+ */
+export type travel_plans = Prisma.travel_plansModel
+/**
+ * Model country_lists
+ * 
+ */
+export type country_lists = Prisma.country_listsModel

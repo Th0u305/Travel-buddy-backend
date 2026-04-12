@@ -6,12 +6,14 @@
     "npm:@supabase/ssr@0.9": "0.9.0_@supabase+supabase-js@2.100.0",
     "npm:@supabase/supabase-js@^2.100.0": "2.100.0",
     "npm:@types/pg@^8.20.0": "8.20.0",
+    "npm:bcryptjs@^3.0.3": "3.0.3",
     "npm:generate@*": "0.14.0",
     "npm:hono@^4.12.9": "4.12.9",
     "npm:pg@^8.20.0": "8.20.0",
     "npm:prisma@*": "7.5.0_@types+react@19.2.14_react@19.2.4_react-dom@19.2.4__react@19.2.4",
     "npm:prisma@^7.5.0": "7.5.0_@types+react@19.2.14_react@19.2.4_react-dom@19.2.4__react@19.2.4",
-    "npm:supabase@^2.84.0": "2.84.0"
+    "npm:supabase@^2.84.0": "2.84.0",
+    "npm:uuid@13": "13.0.0"
   },
   "npm": {
     "@chevrotain/cst-dts-gen@10.5.0": {
@@ -1245,6 +1247,10 @@
         "mixin-deep",
         "pascalcase"
       ]
+    },
+    "bcryptjs@3.0.3": {
+      "integrity": "sha512-GlF5wPWnSa/X5LKM1o0wz0suXIINz1iHRLvTS+sLyi7XPbe5ycmYI3DlZqVGZZtDgl4DmasFg7gOB3JYbphV5g==",
+      "bin": true
     },
     "bin-links@6.0.0": {
       "integrity": "sha512-X4CiKlcV2GjnCMwnKAfbVWpHa++65th9TuzAEYtZoATiOE2DQKhSp4CJlyLoTqdhBKlXjpXjCTYPNNFS33Fi6w==",
@@ -5197,6 +5203,10 @@
     "util-deprecate@1.0.2": {
       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
     },
+    "uuid@13.0.0": {
+      "integrity": "sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==",
+      "bin": true
+    },
     "vali-date@1.0.0": {
       "integrity": "sha512-sgECfZthyaCKW10N0fm27cg8HYTFK5qMWgypqkXMQ4Wbl/zZKx7xZICgcoxIIE+WFAP/MBL2EFwC/YvLxw3Zeg=="
     },
@@ -5380,7 +5390,9 @@
     "packageJson": {
       "dependencies": [
         "npm:@types/pg@^8.20.0",
-        "npm:prisma@^7.5.0"
+        "npm:bcryptjs@^3.0.3",
+        "npm:prisma@^7.5.0",
+        "npm:uuid@13"
       ]
     }
   }
