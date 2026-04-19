@@ -92,7 +92,7 @@ export const ProfilesScalarFieldEnum = {
   id: 'id',
   bio: 'bio',
   avatar_url: 'avatar_url',
-  current_location: 'current_location',
+  country: 'country',
   is_admin: 'is_admin',
   is_premium: 'is_premium',
   is_verified: 'is_verified',
@@ -109,7 +109,9 @@ export const ProfilesScalarFieldEnum = {
   full_name: 'full_name',
   phone: 'phone',
   providers: 'providers',
-  is_password: 'is_password'
+  is_password: 'is_password',
+  travel_plans_id: 'travel_plans_id',
+  username_slug: 'username_slug'
 } as const
 
 export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
@@ -146,7 +148,9 @@ export const Travel_plansScalarFieldEnum = {
   image: 'image',
   tags: 'tags',
   country: 'country',
-  city: 'city'
+  city: 'city',
+  slug: 'slug',
+  participantsId: 'participantsId'
 } as const
 
 export type Travel_plansScalarFieldEnum = (typeof Travel_plansScalarFieldEnum)[keyof typeof Travel_plansScalarFieldEnum]

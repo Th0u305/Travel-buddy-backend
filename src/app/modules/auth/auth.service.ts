@@ -1,11 +1,13 @@
 import { envVars } from "../../config/env.ts";
 import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
 import { Context } from "hono";
+import { slugify } from "../../utils/slugify.ts";
+import { Prisma } from "../../lib/prisma.ts";
 
 const registerUser = async (c: Context) => {
   const body = await c.req.json();
 
-  const { email, password, name, phone_number } = body;
+  const { email, password, name, phone_number, country } = body;
 
   const supabase = await getSupabase(c);
 
@@ -41,6 +43,23 @@ const registerUser = async (c: Context) => {
     };
   }
 
+  const slugData = slugify(name);
+  let slugs = slugData;
+  let count = 1;
+  while (true) {
+    const isExists = await Prisma.profiles.findUnique({
+      where: {
+        username_slug: slugs,
+      },
+    });
+    if (isExists) {
+      count++;
+      slugs = `${slugData}-${count}`;
+    } else {
+      break;
+    }
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
@@ -48,6 +67,7 @@ const registerUser = async (c: Context) => {
       data: {
         full_name: name,
         phone: `+${phone_number}`,
+        country: country,
       },
     },
   });
@@ -113,7 +133,6 @@ const googleLogin = async (c: Context) => {
     },
   });
 
-
   return data.url;
 };
 
@@ -123,7 +142,7 @@ const resetPassword = async (c: Context) => {
   const supabase = getSupabase(c);
 
   const isUndefined = supabase === undefined;
-  
+
   if (isUndefined) {
     return {
       message: "Supabase Client is undefined",

@@ -1,12 +1,31 @@
 import { Context } from "hono";
 import { Prisma } from "../../lib/prisma.ts";
 import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
+import { slugify } from "../../utils/slugify.ts";
 
 const createTravelPlan = async (c: Context) => {
     
     const supabase = getSupabase(c);
     const userId = await supabase.auth.getUser()
     const body = await c.req.json()
+
+    const slugData = slugify(body.trip_title)
+    let slugs = slugData
+    let count = 1
+
+    while(true){
+        const isExists = await Prisma.travel_plans.findUnique({
+            where : {
+                slug : slugs
+            }
+        })
+        if(isExists){
+            count++
+            slugs = `${slugData}-${count}`
+        }else{
+            break
+        }
+    }
 
     const data = await Prisma.travel_plans.create({
         data : {
@@ -24,7 +43,20 @@ const createTravelPlan = async (c: Context) => {
             status : body.status,
             travel_type : body.travel_type,
             tags : body.tags,
-            image : body.cover_url          
+            image : body.cover_url,
+            slug : slugs    
+        }
+    })
+    await Prisma.profiles.update({
+        where : {
+            id : `${userId.data.user?.id}`
+        },
+        data : {
+            travel_plans : {
+                connect : {
+                    id : data.id
+                }
+            }
         }
     })
     return data    

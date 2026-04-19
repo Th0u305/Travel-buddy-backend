@@ -31,7 +31,90 @@ const getCountryLists = catchAsync(async (c: Context) => {
     });
 });
 
+const getTripLists = catchAsync(async (c: Context) => {
+    
+    const data = await getDataService.getTripLists(c)
+
+    if (!data?.success) {
+        return c.json({
+            success: false,
+            code : data?.code,
+            data: data?.data,
+            message : data?.message
+        });
+    }
+
+    return c.json({
+        success: true,
+        code : data?.code,
+        data: data?.data,
+    });
+});
+
+const getTripListById = catchAsync(async (c: Context) => {
+    
+    const data = await getDataService.getTripListById(c)
+
+    if (!data?.success) {
+        return c.json({
+            success: false,
+            code : data?.code,
+            data: data?.data,
+            message : data?.message
+        });
+    }
+
+    return c.json({
+        success: true,
+        code : data?.code,
+        data: data?.data,
+    });
+});
+
+const findBuddies = catchAsync(async (c: Context) => {
+  const data = await getDataService.findBuddies(c);
+
+  if (!data?.success) {
+    return c.json({
+      success: false,
+      code: data?.code,
+      data: data?.data,
+      message: data?.message,
+    });
+  }
+
+  return c.json({
+    success: true,
+    code: data?.code,
+    data: data?.data,
+  });
+});
+
+const fullUserProfile = catchAsync(async (c: Context) => {
+  const data = await getDataService.fullUserProfile(c);
+
+  if (!data?.success) {
+    return c.json({
+      success: false,
+      code: data?.code,
+      data: data?.data,
+      message: data?.message,
+    });
+  }
+
+  return c.json({
+    success: true,
+    code: data?.code,
+    data: data?.data,
+  });
+});
+
+
 export const getDataController = {
     getUserData,
-    getCountryLists
+    getCountryLists,
+    getTripLists,
+    getTripListById,
+    findBuddies,
+    fullUserProfile
 };

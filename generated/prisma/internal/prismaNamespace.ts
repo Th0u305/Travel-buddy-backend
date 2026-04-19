@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.7.0
+ * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.7.0",
+  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
 /**
@@ -835,7 +835,7 @@ export const ProfilesScalarFieldEnum = {
   id: 'id',
   bio: 'bio',
   avatar_url: 'avatar_url',
-  current_location: 'current_location',
+  country: 'country',
   is_admin: 'is_admin',
   is_premium: 'is_premium',
   is_verified: 'is_verified',
@@ -852,7 +852,9 @@ export const ProfilesScalarFieldEnum = {
   full_name: 'full_name',
   phone: 'phone',
   providers: 'providers',
-  is_password: 'is_password'
+  is_password: 'is_password',
+  travel_plans_id: 'travel_plans_id',
+  username_slug: 'username_slug'
 } as const
 
 export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
@@ -889,7 +891,9 @@ export const Travel_plansScalarFieldEnum = {
   image: 'image',
   tags: 'tags',
   country: 'country',
-  city: 'city'
+  city: 'city',
+  slug: 'slug',
+  participantsId: 'participantsId'
 } as const
 
 export type Travel_plansScalarFieldEnum = (typeof Travel_plansScalarFieldEnum)[keyof typeof Travel_plansScalarFieldEnum]
