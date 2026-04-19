@@ -94,7 +94,7 @@ const logInUser = async (c: Context) => {
   const { data: user, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
-  });
+  });  
 
   if (error) {
     return error;

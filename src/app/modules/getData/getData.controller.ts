@@ -109,6 +109,42 @@ const fullUserProfile = catchAsync(async (c: Context) => {
   });
 });
 
+const canUserCreateTrip = catchAsync(async (c: Context) => {
+  const data = await getDataService.canUserCreateTrip(c);
+
+  if (!data?.success) {
+    return c.json({
+      success: false,
+      code: data?.code,
+      data: data?.data,
+    });
+  }
+
+  return c.json({
+    success: true,
+    code: data?.code,
+    data: data?.data,
+  });
+});
+
+const updateTripStatus = catchAsync(async (c: Context) => {
+  const data = await getDataService.updateTripStatus(c);
+
+  if (!data?.success) {
+    return c.json({
+      success: false,
+      code: data?.code,
+      data: data?.data,
+    });
+  }
+
+  return c.json({
+    success: true,
+    code: data?.code,
+    data: data?.data,
+  });
+});
+
 
 export const getDataController = {
     getUserData,
@@ -116,5 +152,7 @@ export const getDataController = {
     getTripLists,
     getTripListById,
     findBuddies,
-    fullUserProfile
+    fullUserProfile,
+    canUserCreateTrip,
+    updateTripStatus
 };

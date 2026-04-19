@@ -8,7 +8,7 @@ const getUserData = async (c: Context) => {
   const { data, error } = await supabase.auth.getUser();
   const { data: user } = await supabase
     .from("profiles")
-    .select("full_name, email, avatar_url, profile_picture, username_slug")
+    .select("full_name, email, avatar_url, profile_picture, username_slug, id")
     .eq("id", data?.user?.id)
     .single();
   if (error) {
@@ -273,8 +273,81 @@ const fullUserProfile = async (c: Context) => {
     code: 200,
     data: data,
   };
-};
+}
 
+const canUserCreateTrip = async (c: Context) => {
+  const id = c.req.param("id") as string
+  const todayDate = new Date();
+  const formattedDate = todayDate.toISOString().split("T")[0];
+  const data = await Prisma.travel_plans.findMany({
+    where : {
+      user_id : id,
+      end_date : {
+        gte: formattedDate,
+      },
+    },
+    select : {
+      end_date : true
+    }
+  })
+
+  return {
+    success: true,
+    code: 200,
+    data: data.length,
+  };
+}
+
+export const updateTripStatus = async (c:Context) => {
+
+  const {id} = await c.req.json()
+
+  const trip = await Prisma.travel_plans.findMany({
+    where :{
+      user_id : id 
+    },
+    select: { start_date: true, end_date: true, status: true }
+  });
+
+  if (!trip) {
+    return { success: false, code: 404, message: "Trip not found" };
+  }
+
+  if (!trip[0]?.start_date || !trip[0]?.end_date) {
+    return { success: true, code: 200, data: trip, message: "Dates missing, status unchanged" };
+  }
+
+  // Normalize to local midnight (avoids timezone/off-by-one bugs)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const startDate = new Date(trip[0]?.start_date);
+  startDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(trip[0]?.end_date);
+  endDate.setHours(0, 0, 0, 0);
+ 
+  let newStatus = trip[0]?.status;
+  if (today < startDate) {
+    newStatus = "upcoming";
+  } else if (today >= startDate && today <= endDate) {
+    newStatus = "ongoing";
+  } else {
+    newStatus = "completed";
+  }
+
+  // Only update if status actually changed
+  if (newStatus !== trip[0]?.status) {
+    const updated = await Prisma.travel_plans.updateMany({
+      where: { user_id : id },
+      data: { status: newStatus }
+    });
+    console.log(updated);
+    return { success: true, code: 200, data: updated };
+  }
+
+  return { success: true, code: 200, data: trip };
+};
 
 export const getDataService = {
   getUserData,
@@ -282,5 +355,7 @@ export const getDataService = {
   getTripLists,
   getTripListById,
   findBuddies,
-  fullUserProfile
+  fullUserProfile,
+  canUserCreateTrip,
+  updateTripStatus
 };
