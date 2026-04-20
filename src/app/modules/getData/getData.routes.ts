@@ -11,6 +11,6 @@ getData.get("/getTravelListById/:id", getDataController.getTripListById)
 getData.get("/findBuddies", getDataController.findBuddies)
 getData.get("/fullUserProfile/:id" ,getDataController.fullUserProfile)
 getData.get("/canUserCreateTrip/:id" ,authGuard(), getDataController.canUserCreateTrip)
-getData.patch("/updateTripStatus" ,authGuard(), getDataController.updateTripStatus)
+getData.post("/updateTripStatus" ,authGuard(), getDataController.updateTripStatus)
 
 

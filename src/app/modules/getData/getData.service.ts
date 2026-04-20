@@ -1,7 +1,10 @@
 import { Context } from "hono";
 import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
 import { Prisma } from "../../lib/prisma.ts";
-import { PrismaTravelBuddiesConditionTs, PrismaTripConditionTs } from "../../types/types.ts";
+import {
+  PrismaTravelBuddiesConditionTs,
+  PrismaTripConditionTs,
+} from "../../types/types.ts";
 
 const getUserData = async (c: Context) => {
   const supabase = getSupabase(c);
@@ -75,7 +78,7 @@ const getTripLists = async (c: Context) => {
     skip: (Number(page) - 1) * 10,
 
     where: conditions.length > 0 ? { AND: conditions } : {},
-    
+
     include: {
       profiles: {
         select: {
@@ -160,25 +163,35 @@ const findBuddies = async (c: Context) => {
     },
   ];
 
-  if (typeof searchByCountryOrCity === "string" && searchByCountryOrCity.trim() !== "") {
+  if (
+    typeof searchByCountryOrCity === "string" &&
+    searchByCountryOrCity.trim() !== ""
+  ) {
     conditions.push({
       OR: [
-        { country: { contains: searchByCountryOrCity.trim(), mode: "insensitive" } },
-        { city: { contains: searchByCountryOrCity.trim(), mode: "insensitive" } },
+        {
+          country: {
+            contains: searchByCountryOrCity.trim(),
+            mode: "insensitive",
+          },
+        },
+        {
+          city: { contains: searchByCountryOrCity.trim(), mode: "insensitive" },
+        },
       ],
     });
   }
 
   if (typeof search === "string" && search.trim() !== "") {
     conditions.push({
-      profiles : {
+      profiles: {
         is: {
           full_name: {
             contains: search.trim(),
             mode: "insensitive",
           },
-        }
-      }
+        },
+      },
     });
   }
 
@@ -209,8 +222,7 @@ const findBuddies = async (c: Context) => {
         },
       },
     },
-  })
-
+  });
 
   if (!data) {
     return {
@@ -225,10 +237,10 @@ const findBuddies = async (c: Context) => {
     code: 200,
     data: data,
   };
-}
+};
 
 const fullUserProfile = async (c: Context) => {
-  const id = c.req.param("id") as string
+  const id = c.req.param("id") as string;
 
   if (id?.length === 0) {
     return {
@@ -241,7 +253,7 @@ const fullUserProfile = async (c: Context) => {
 
   const data = await Prisma.profiles.findUnique({
     where: {
-      username_slug : id || undefined
+      username_slug: id || undefined,
     },
     include: {
       travel_plans: {
@@ -254,7 +266,7 @@ const fullUserProfile = async (c: Context) => {
           tags: true,
           slug: true,
           travel_type: true,
-          image : true,
+          image: true,
         },
       },
     },
@@ -273,80 +285,43 @@ const fullUserProfile = async (c: Context) => {
     code: 200,
     data: data,
   };
-}
+};
 
 const canUserCreateTrip = async (c: Context) => {
-  const id = c.req.param("id") as string
+  const id = c.req.param("id") as string;
   const todayDate = new Date();
   const formattedDate = todayDate.toISOString().split("T")[0];
   const data = await Prisma.travel_plans.findMany({
-    where : {
-      user_id : id,
-      end_date : {
+    where: {
+      user_id: id,
+      end_date: {
         gte: formattedDate,
       },
     },
-    select : {
-      end_date : true
-    }
-  })
+    select: {
+      end_date: true,
+    },
+  });
 
   return {
     success: true,
     code: 200,
     data: data.length,
   };
-}
+};
 
-export const updateTripStatus = async (c:Context) => {
+export const updateTripStatus = async (c: Context) => {
+  const supabase = getSupabase(c);
 
-  const {id} = await c.req.json()
+  const { data, error } = await supabase.rpc("bulk_update_trip_statuses");
+  await Prisma.$executeRaw`SELECT public.bulk_update_trip_statuses();`;
 
-  const trip = await Prisma.travel_plans.findMany({
-    where :{
-      user_id : id 
-    },
-    select: { start_date: true, end_date: true, status: true }
-  });
-
-  if (!trip) {
-    return { success: false, code: 404, message: "Trip not found" };
+  if (data) {
+    return { success: true, code: 200, data: data };
   }
-
-  if (!trip[0]?.start_date || !trip[0]?.end_date) {
-    return { success: true, code: 200, data: trip, message: "Dates missing, status unchanged" };
+  if (error) {
+    return { success: false, code: 500, data: error };
   }
-
-  // Normalize to local midnight (avoids timezone/off-by-one bugs)
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const startDate = new Date(trip[0]?.start_date);
-  startDate.setHours(0, 0, 0, 0);
-
-  const endDate = new Date(trip[0]?.end_date);
-  endDate.setHours(0, 0, 0, 0);
- 
-  let newStatus = trip[0]?.status;
-  if (today < startDate) {
-    newStatus = "upcoming";
-  } else if (today >= startDate && today <= endDate) {
-    newStatus = "ongoing";
-  } else {
-    newStatus = "completed";
-  }
-
-  // Only update if status actually changed
-  if (newStatus !== trip[0]?.status) {
-    const updated = await Prisma.travel_plans.updateMany({
-      where: { user_id : id },
-      data: { status: newStatus }
-    });
-    console.log(updated);
-    return { success: true, code: 200, data: updated };
-  }
-
-  return { success: true, code: 200, data: trip };
 };
 
 export const getDataService = {
@@ -357,5 +332,5 @@ export const getDataService = {
   findBuddies,
   fullUserProfile,
   canUserCreateTrip,
-  updateTripStatus
+  updateTripStatus,
 };

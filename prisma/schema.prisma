@@ -70,14 +70,14 @@ model travel_plans {
   id                String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   user_id           String           @db.Uuid
   title             String
-  start_date        String  
-  end_date          String        
+  start_date        DateTime         @db.Timestamptz(6)
+  end_date          DateTime         @db.Timestamptz(6)
   description       String?
   min_budget        Int?
   max_budget        Int?
   looking_for_buddy Boolean?         @default(true)
   max_buddies       Int?             @default(1)
-  status            String?          @default("active")
+  status            String?          
   created_at        DateTime?        @default(now()) @db.Timestamptz(6)
   updated_at        DateTime?        @default(now()) @db.Timestamptz(6)
   travel_type       String?
