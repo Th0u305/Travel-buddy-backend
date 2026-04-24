@@ -1,6 +1,6 @@
 import { app } from "./app.ts";
-import { envVars } from "./app/config/env.ts";
-import { connectRedis } from "./app/config/redis.config.ts";
+import { envVars } from "./src/app/config/env.ts";
+import { connectRedis } from "./src/app/config/redis.config.ts";
 
 // 1. Create an AbortController to signal the server to stop
 const controller = new AbortController();

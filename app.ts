@@ -1,8 +1,8 @@
 import { Context, Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { customRoutes } from './routes/index.ts';
+import { customRoutes } from './src/routes/index.ts';
 import { HTTPException } from 'hono/http-exception';
-import { envVars } from './app/config/env.ts';
+import { envVars } from './src/app/config/env.ts';
 
 export const app = new Hono()
 
