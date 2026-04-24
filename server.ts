@@ -20,7 +20,7 @@ const server = Deno.serve(
 
 const shutdown = async (reason: string, error?: Error) => {
   console.log(`\n🛑 ${reason} detected. Server shutting down...`);
-  if (error) console.error(error);
+  console.error(error);
 
   // This tells Deno.serve to stop accepting new requests
   controller.abort();
