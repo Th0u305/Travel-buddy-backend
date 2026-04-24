@@ -7,7 +7,7 @@ import { envVars } from './src/app/config/env.ts';
 export const app = new Hono()
 
 app.use("/api/v1/*", cors({
-  origin : [envVars.FRONTEND_HOST as string],
+  origin : envVars.FRONTEND_HOST,
   credentials : true,
   allowMethods : ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowHeaders : ["Content-Type", "Authorization", "X-Custom-Header"],
