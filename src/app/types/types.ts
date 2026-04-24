@@ -29,14 +29,15 @@ export interface PrismaTripConditionTs {
 export interface PrismaTravelBuddiesConditionTs {
   end_date?: {
     gte: string;
-  },
+  };
   profiles?: {
     is: {
       full_name: {
-        contains: string , mode: "insensitive" 
+        contains: string;
+        mode: "insensitive";
       };
     };
-  },
+  };
   OR?: [
     {
       country: { contains: string; mode: "insensitive" };
@@ -45,7 +46,6 @@ export interface PrismaTravelBuddiesConditionTs {
       city: { contains: string; mode: "insensitive" };
     },
   ];
-
 }
 
 export interface PrismaProfileConditionTs {

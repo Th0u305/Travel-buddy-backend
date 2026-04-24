@@ -8,8 +8,8 @@
     "pg": "npm:pg@^8.20.0",
     "prisma": "npm:prisma@^7.7.0",
     "supabase": "npm:supabase@^2.90.1",
-    "redis" : "npm:redis@^5.12.1",
-    "nodemailer" : "npm:nodemailer@^8.0.5"
+    "redis": "npm:redis@^5.12.1",
+    "nodemailer": "npm:nodemailer@^8.0.5"
   },
   "tasks": {
     "start": "deno run -A --env=.env server.ts",
@@ -23,6 +23,5 @@
   "compilerOptions": {
     "jsx": "precompile",
     "jsxImportSource": "hono/jsx"
-  },
-  "nodeModulesDir": "auto"
+  }
 }

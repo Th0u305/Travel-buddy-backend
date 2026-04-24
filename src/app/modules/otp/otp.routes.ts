@@ -6,4 +6,3 @@ export const OtpRoutes = new Hono();
 
 OtpRoutes.post("/send", OTPController.sendOTP);
 OtpRoutes.post("/verify", OTPController.verifyOTP);
-

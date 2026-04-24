@@ -4,7 +4,6 @@ import type { Context, MiddlewareHandler } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 import { envVars } from "../config/env.ts";
 
-
 export const getSupabase = (c: Context) => {
   return c.get("supabase");
 };
@@ -12,12 +11,10 @@ export const getSupabase = (c: Context) => {
 export const supabaseMiddleware = (): MiddlewareHandler => {
   return async (c, next) => {
     if (!envVars.SUPABASE_URL) {
-
       throw new Error("SUPABASE_URL missing!");
     }
 
     if (!envVars.PUBLISHABLE_KEY) {
-
       throw new Error("SUPABASE_PUBLISHABLE_KEY missing!");
     }
 
@@ -36,7 +33,7 @@ export const supabaseMiddleware = (): MiddlewareHandler => {
               value: parsedCookies[name],
             }));
           },
-          setAll(cookiesToSet) {            
+          setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value, options }) => {
               setCookie(c, name, value, options as any);
             });

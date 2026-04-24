@@ -5,6 +5,6 @@ import { envVars } from "../config/env.ts";
 const connectionString = `${envVars.DATABASE_URL}`;
 
 const adapter = new PrismaPg({ connectionString });
-const Prisma = new PrismaClient({ adapter  , log : ["error"]});
+const Prisma = new PrismaClient({ adapter, log: ["error"] });
 
 export { Prisma };

@@ -8,25 +8,26 @@ const controller = new AbortController();
 // 2. Start the server with the abort signal
 
 (async () => {
-  await connectRedis()
-})()
+  await connectRedis();
+})();
 
 const server = Deno.serve(
-  { port: Number(envVars.PORT) }, app.fetch
-)
+  { port: Number(envVars.PORT) },
+  app.fetch,
+);
 
 // --- Graceful Shutdown Logic ---
 
 const shutdown = async (reason: string, error?: Error) => {
   console.log(`\n🛑 ${reason} detected. Server shutting down...`);
   if (error) console.error(error);
-  
+
   // This tells Deno.serve to stop accepting new requests
-  controller.abort(); 
-  
+  controller.abort();
+
   // Wait for the server promise to resolve (finishes active requests)
   await server.finished;
-  
+
   console.log("👋 Shutdown complete.");
   Deno.exit(error ? 1 : 0);
 };

@@ -4,4 +4,8 @@ import { profileControllers } from "./profile.controller.ts";
 
 export const profileRoutes = new Hono();
 
-profileRoutes.post("/updateProfile",authGuard(), profileControllers.updateProfile);
+profileRoutes.post(
+  "/updateProfile",
+  authGuard(),
+  profileControllers.updateProfile,
+);

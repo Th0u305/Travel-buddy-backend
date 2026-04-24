@@ -6,13 +6,11 @@ import { travelPlanRoutes } from "../app/modules/create-travel-plan/travelPlan.r
 import { OtpRoutes } from "../app/modules/otp/otp.routes.ts";
 import { profileRoutes } from "../app/modules/profile/profile.route.ts";
 
+export const customRoutes = new Hono();
 
-export const customRoutes = new Hono()
-
-customRoutes.use("/*", supabaseMiddleware())
+customRoutes.use("/*", supabaseMiddleware());
 customRoutes.route("/auth", authRoutes);
 customRoutes.route("/getData", getData);
 customRoutes.route("/travel-plan", travelPlanRoutes);
 customRoutes.route("/otp", OtpRoutes);
 customRoutes.route("/profile", profileRoutes);
-
