@@ -47,3 +47,9 @@ export interface PrismaTravelBuddiesConditionTs {
   ];
 
 }
+
+export interface PrismaProfileConditionTs {
+  avatar_url?: string;
+  bio?: string;
+  travel_interests?: string;
+}

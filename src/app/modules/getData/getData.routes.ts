@@ -9,8 +9,9 @@ getData.get("/getCountryLists", getDataController.getCountryLists)
 getData.get("/getTravelLists", getDataController.getTripLists)
 getData.get("/getTravelListById/:id", getDataController.getTripListById)
 getData.get("/findBuddies", getDataController.findBuddies)
-getData.get("/fullUserProfile/:id" ,getDataController.fullUserProfile)
+getData.get("/viewUserProfile/:id" ,getDataController.viewUserProfile)
 getData.get("/canUserCreateTrip/:id" ,authGuard(), getDataController.canUserCreateTrip)
 getData.post("/updateTripStatus" ,authGuard(), getDataController.updateTripStatus)
+getData.get("/getUserFullProfile", authGuard(), getDataController.getUserFullProfile)
 
 

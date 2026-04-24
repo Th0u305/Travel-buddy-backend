@@ -42,8 +42,8 @@ export type Travel_plansMinAggregateOutputType = {
   id: string | null
   user_id: string | null
   title: string | null
-  start_date: string | null
-  end_date: string | null
+  start_date: Date | null
+  end_date: Date | null
   description: string | null
   min_budget: number | null
   max_budget: number | null
@@ -63,8 +63,8 @@ export type Travel_plansMaxAggregateOutputType = {
   id: string | null
   user_id: string | null
   title: string | null
-  start_date: string | null
-  end_date: string | null
+  start_date: Date | null
+  end_date: Date | null
   description: string | null
   min_budget: number | null
   max_budget: number | null
@@ -273,8 +273,8 @@ export type Travel_plansGroupByOutputType = {
   id: string
   user_id: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date
+  end_date: Date
   description: string | null
   min_budget: number | null
   max_budget: number | null
@@ -319,8 +319,8 @@ export type travel_plansWhereInput = {
   id?: Prisma.UuidFilter<"travel_plans"> | string
   user_id?: Prisma.UuidFilter<"travel_plans"> | string
   title?: Prisma.StringFilter<"travel_plans"> | string
-  start_date?: Prisma.StringFilter<"travel_plans"> | string
-  end_date?: Prisma.StringFilter<"travel_plans"> | string
+  start_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
+  end_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
   description?: Prisma.StringNullableFilter<"travel_plans"> | string | null
   min_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
   max_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
@@ -375,8 +375,8 @@ export type travel_plansWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.travel_plansWhereInput | Prisma.travel_plansWhereInput[]
   user_id?: Prisma.UuidFilter<"travel_plans"> | string
   title?: Prisma.StringFilter<"travel_plans"> | string
-  start_date?: Prisma.StringFilter<"travel_plans"> | string
-  end_date?: Prisma.StringFilter<"travel_plans"> | string
+  start_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
+  end_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
   description?: Prisma.StringNullableFilter<"travel_plans"> | string | null
   min_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
   max_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
@@ -431,8 +431,8 @@ export type travel_plansScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"travel_plans"> | string
   user_id?: Prisma.UuidWithAggregatesFilter<"travel_plans"> | string
   title?: Prisma.StringWithAggregatesFilter<"travel_plans"> | string
-  start_date?: Prisma.StringWithAggregatesFilter<"travel_plans"> | string
-  end_date?: Prisma.StringWithAggregatesFilter<"travel_plans"> | string
+  start_date?: Prisma.DateTimeWithAggregatesFilter<"travel_plans"> | Date | string
+  end_date?: Prisma.DateTimeWithAggregatesFilter<"travel_plans"> | Date | string
   description?: Prisma.StringNullableWithAggregatesFilter<"travel_plans"> | string | null
   min_budget?: Prisma.IntNullableWithAggregatesFilter<"travel_plans"> | number | null
   max_budget?: Prisma.IntNullableWithAggregatesFilter<"travel_plans"> | number | null
@@ -453,8 +453,8 @@ export type travel_plansScalarWhereWithAggregatesInput = {
 export type travel_plansCreateInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -479,8 +479,8 @@ export type travel_plansUncheckedCreateInput = {
   id?: string
   user_id: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -503,8 +503,8 @@ export type travel_plansUncheckedCreateInput = {
 export type travel_plansUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -529,8 +529,8 @@ export type travel_plansUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -554,8 +554,8 @@ export type travel_plansCreateManyInput = {
   id?: string
   user_id: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -576,8 +576,8 @@ export type travel_plansCreateManyInput = {
 export type travel_plansUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -599,8 +599,8 @@ export type travel_plansUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -795,6 +795,10 @@ export type travel_plansCreateparticipantsIdInput = {
   set: string[]
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -816,8 +820,8 @@ export type travel_plansUpdateparticipantsIdInput = {
 export type travel_plansCreateWithoutBuddy_requestsInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -841,8 +845,8 @@ export type travel_plansUncheckedCreateWithoutBuddy_requestsInput = {
   id?: string
   user_id: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -880,8 +884,8 @@ export type travel_plansUpdateToOneWithWhereWithoutBuddy_requestsInput = {
 export type travel_plansUpdateWithoutBuddy_requestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -905,8 +909,8 @@ export type travel_plansUncheckedUpdateWithoutBuddy_requestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -928,8 +932,8 @@ export type travel_plansUncheckedUpdateWithoutBuddy_requestsInput = {
 export type travel_plansCreateWithoutProfilesInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -952,8 +956,8 @@ export type travel_plansCreateWithoutProfilesInput = {
 export type travel_plansUncheckedCreateWithoutProfilesInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -1006,8 +1010,8 @@ export type travel_plansScalarWhereInput = {
   id?: Prisma.UuidFilter<"travel_plans"> | string
   user_id?: Prisma.UuidFilter<"travel_plans"> | string
   title?: Prisma.StringFilter<"travel_plans"> | string
-  start_date?: Prisma.StringFilter<"travel_plans"> | string
-  end_date?: Prisma.StringFilter<"travel_plans"> | string
+  start_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
+  end_date?: Prisma.DateTimeFilter<"travel_plans"> | Date | string
   description?: Prisma.StringNullableFilter<"travel_plans"> | string | null
   min_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
   max_budget?: Prisma.IntNullableFilter<"travel_plans"> | number | null
@@ -1028,8 +1032,8 @@ export type travel_plansScalarWhereInput = {
 export type travel_plansCreateWithoutReviewsInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -1053,8 +1057,8 @@ export type travel_plansUncheckedCreateWithoutReviewsInput = {
   id?: string
   user_id: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -1092,8 +1096,8 @@ export type travel_plansUpdateToOneWithWhereWithoutReviewsInput = {
 export type travel_plansUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1117,8 +1121,8 @@ export type travel_plansUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1140,8 +1144,8 @@ export type travel_plansUncheckedUpdateWithoutReviewsInput = {
 export type travel_plansCreateManyProfilesInput = {
   id?: string
   title: string
-  start_date: string
-  end_date: string
+  start_date: Date | string
+  end_date: Date | string
   description?: string | null
   min_budget?: number | null
   max_budget?: number | null
@@ -1162,8 +1166,8 @@ export type travel_plansCreateManyProfilesInput = {
 export type travel_plansUpdateWithoutProfilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1186,8 +1190,8 @@ export type travel_plansUpdateWithoutProfilesInput = {
 export type travel_plansUncheckedUpdateWithoutProfilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1210,8 +1214,8 @@ export type travel_plansUncheckedUpdateWithoutProfilesInput = {
 export type travel_plansUncheckedUpdateManyWithoutProfilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  start_date?: Prisma.StringFieldUpdateOperationsInput | string
-  end_date?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   min_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   max_budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1392,8 +1396,8 @@ export type $travel_plansPayload<ExtArgs extends runtime.Types.Extensions.Intern
     id: string
     user_id: string
     title: string
-    start_date: string
-    end_date: string
+    start_date: Date
+    end_date: Date
     description: string | null
     min_budget: number | null
     max_budget: number | null
@@ -1838,8 +1842,8 @@ export interface travel_plansFieldRefs {
   readonly id: Prisma.FieldRef<"travel_plans", 'String'>
   readonly user_id: Prisma.FieldRef<"travel_plans", 'String'>
   readonly title: Prisma.FieldRef<"travel_plans", 'String'>
-  readonly start_date: Prisma.FieldRef<"travel_plans", 'String'>
-  readonly end_date: Prisma.FieldRef<"travel_plans", 'String'>
+  readonly start_date: Prisma.FieldRef<"travel_plans", 'DateTime'>
+  readonly end_date: Prisma.FieldRef<"travel_plans", 'DateTime'>
   readonly description: Prisma.FieldRef<"travel_plans", 'String'>
   readonly min_budget: Prisma.FieldRef<"travel_plans", 'Int'>
   readonly max_budget: Prisma.FieldRef<"travel_plans", 'Int'>

@@ -37,7 +37,6 @@ export type ProfilesMinAggregateOutputType = {
   stripe_customer_id: string | null
   created_at: Date | null
   updated_at: Date | null
-  profile_picture: string | null
   email: string | null
   isDeleted: boolean | null
   full_name: string | null
@@ -59,7 +58,6 @@ export type ProfilesMaxAggregateOutputType = {
   stripe_customer_id: string | null
   created_at: Date | null
   updated_at: Date | null
-  profile_picture: string | null
   email: string | null
   isDeleted: boolean | null
   full_name: string | null
@@ -81,7 +79,6 @@ export type ProfilesCountAggregateOutputType = {
   stripe_customer_id: number
   created_at: number
   updated_at: number
-  profile_picture: number
   email: number
   visited_countries: number
   travel_interests: number
@@ -109,7 +106,6 @@ export type ProfilesMinAggregateInputType = {
   stripe_customer_id?: true
   created_at?: true
   updated_at?: true
-  profile_picture?: true
   email?: true
   isDeleted?: true
   full_name?: true
@@ -131,7 +127,6 @@ export type ProfilesMaxAggregateInputType = {
   stripe_customer_id?: true
   created_at?: true
   updated_at?: true
-  profile_picture?: true
   email?: true
   isDeleted?: true
   full_name?: true
@@ -153,7 +148,6 @@ export type ProfilesCountAggregateInputType = {
   stripe_customer_id?: true
   created_at?: true
   updated_at?: true
-  profile_picture?: true
   email?: true
   visited_countries?: true
   travel_interests?: true
@@ -252,7 +246,6 @@ export type ProfilesGroupByOutputType = {
   stripe_customer_id: string | null
   created_at: Date | null
   updated_at: Date | null
-  profile_picture: string | null
   email: string
   visited_countries: string[]
   travel_interests: string[]
@@ -299,7 +292,6 @@ export type profilesWhereInput = {
   stripe_customer_id?: Prisma.StringNullableFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
-  profile_picture?: Prisma.StringNullableFilter<"profiles"> | string | null
   email?: Prisma.StringFilter<"profiles"> | string
   visited_countries?: Prisma.StringNullableListFilter<"profiles">
   travel_interests?: Prisma.StringNullableListFilter<"profiles">
@@ -326,7 +318,6 @@ export type profilesOrderByWithRelationInput = {
   stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  profile_picture?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   visited_countries?: Prisma.SortOrder
   travel_interests?: Prisma.SortOrder
@@ -360,7 +351,6 @@ export type profilesWhereUniqueInput = Prisma.AtLeast<{
   stripe_customer_id?: Prisma.StringNullableFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"profiles"> | Date | string | null
-  profile_picture?: Prisma.StringNullableFilter<"profiles"> | string | null
   visited_countries?: Prisma.StringNullableListFilter<"profiles">
   travel_interests?: Prisma.StringNullableListFilter<"profiles">
   isDeleted?: Prisma.BoolFilter<"profiles"> | boolean
@@ -383,7 +373,6 @@ export type profilesOrderByWithAggregationInput = {
   stripe_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  profile_picture?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   visited_countries?: Prisma.SortOrder
   travel_interests?: Prisma.SortOrder
@@ -415,7 +404,6 @@ export type profilesScalarWhereWithAggregatesInput = {
   stripe_customer_id?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"profiles"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"profiles"> | Date | string | null
-  profile_picture?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"profiles"> | string
   visited_countries?: Prisma.StringNullableListFilter<"profiles">
   travel_interests?: Prisma.StringNullableListFilter<"profiles">
@@ -441,7 +429,6 @@ export type profilesCreateInput = {
   stripe_customer_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  profile_picture?: string | null
   email?: string
   visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
@@ -468,7 +455,6 @@ export type profilesUncheckedCreateInput = {
   stripe_customer_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  profile_picture?: string | null
   email?: string
   visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
@@ -495,7 +481,6 @@ export type profilesUpdateInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -522,7 +507,6 @@ export type profilesUncheckedUpdateInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -549,7 +533,6 @@ export type profilesCreateManyInput = {
   stripe_customer_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  profile_picture?: string | null
   email?: string
   visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
@@ -575,7 +558,6 @@ export type profilesUpdateManyMutationInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -601,7 +583,6 @@ export type profilesUncheckedUpdateManyInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -635,7 +616,6 @@ export type profilesCountOrderByAggregateInput = {
   stripe_customer_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  profile_picture?: Prisma.SortOrder
   email?: Prisma.SortOrder
   visited_countries?: Prisma.SortOrder
   travel_interests?: Prisma.SortOrder
@@ -661,7 +641,6 @@ export type profilesMaxOrderByAggregateInput = {
   stripe_customer_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  profile_picture?: Prisma.SortOrder
   email?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
@@ -683,7 +662,6 @@ export type profilesMinOrderByAggregateInput = {
   stripe_customer_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  profile_picture?: Prisma.SortOrder
   email?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   full_name?: Prisma.SortOrder
@@ -770,7 +748,6 @@ export type profilesCreateWithoutTravel_plansInput = {
   stripe_customer_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  profile_picture?: string | null
   email?: string
   visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
@@ -796,7 +773,6 @@ export type profilesUncheckedCreateWithoutTravel_plansInput = {
   stripe_customer_id?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  profile_picture?: string | null
   email?: string
   visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
@@ -838,7 +814,6 @@ export type profilesUpdateWithoutTravel_plansInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -864,7 +839,6 @@ export type profilesUncheckedUpdateWithoutTravel_plansInput = {
   stripe_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
   travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
@@ -921,7 +895,6 @@ export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   stripe_customer_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  profile_picture?: boolean
   email?: boolean
   visited_countries?: boolean
   travel_interests?: boolean
@@ -949,7 +922,6 @@ export type profilesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   stripe_customer_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  profile_picture?: boolean
   email?: boolean
   visited_countries?: boolean
   travel_interests?: boolean
@@ -975,7 +947,6 @@ export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   stripe_customer_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  profile_picture?: boolean
   email?: boolean
   visited_countries?: boolean
   travel_interests?: boolean
@@ -1001,7 +972,6 @@ export type profilesSelectScalar = {
   stripe_customer_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  profile_picture?: boolean
   email?: boolean
   visited_countries?: boolean
   travel_interests?: boolean
@@ -1014,7 +984,7 @@ export type profilesSelectScalar = {
   username_slug?: boolean
 }
 
-export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "avatar_url" | "country" | "is_admin" | "is_premium" | "is_verified" | "subscription_tier" | "subscription_expires_at" | "stripe_customer_id" | "created_at" | "updated_at" | "profile_picture" | "email" | "visited_countries" | "travel_interests" | "isDeleted" | "full_name" | "phone" | "providers" | "is_password" | "travel_plans_id" | "username_slug", ExtArgs["result"]["profiles"]>
+export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "avatar_url" | "country" | "is_admin" | "is_premium" | "is_verified" | "subscription_tier" | "subscription_expires_at" | "stripe_customer_id" | "created_at" | "updated_at" | "email" | "visited_countries" | "travel_interests" | "isDeleted" | "full_name" | "phone" | "providers" | "is_password" | "travel_plans_id" | "username_slug", ExtArgs["result"]["profiles"]>
 export type profilesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   travel_plans?: boolean | Prisma.profiles$travel_plansArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
@@ -1040,7 +1010,6 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     stripe_customer_id: string | null
     created_at: Date | null
     updated_at: Date | null
-    profile_picture: string | null
     email: string
     visited_countries: string[]
     travel_interests: string[]
@@ -1487,7 +1456,6 @@ export interface profilesFieldRefs {
   readonly stripe_customer_id: Prisma.FieldRef<"profiles", 'String'>
   readonly created_at: Prisma.FieldRef<"profiles", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"profiles", 'DateTime'>
-  readonly profile_picture: Prisma.FieldRef<"profiles", 'String'>
   readonly email: Prisma.FieldRef<"profiles", 'String'>
   readonly visited_countries: Prisma.FieldRef<"profiles", 'String[]'>
   readonly travel_interests: Prisma.FieldRef<"profiles", 'String[]'>

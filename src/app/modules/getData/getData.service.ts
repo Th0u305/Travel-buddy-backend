@@ -11,7 +11,7 @@ const getUserData = async (c: Context) => {
   const { data, error } = await supabase.auth.getUser();
   const { data: user } = await supabase
     .from("profiles")
-    .select("full_name, email, avatar_url, profile_picture, username_slug, id")
+    .select("full_name, email, avatar_url, username_slug, id")
     .eq("id", data?.user?.id)
     .single();
   if (error) {
@@ -83,7 +83,6 @@ const getTripLists = async (c: Context) => {
       profiles: {
         select: {
           avatar_url: true,
-          profile_picture: true,
         },
       },
     },
@@ -126,7 +125,6 @@ const getTripListById = async (c: Context) => {
           username_slug: true,
           full_name: true,
           avatar_url: true,
-          profile_picture: true,
         },
       },
     },
@@ -153,7 +151,7 @@ const findBuddies = async (c: Context) => {
   const searchByCountryOrCity = c.req.query("searchByCountryOrCity") || "";
 
   const todayDate = new Date();
-  const formattedDate = todayDate.toISOString().split("T")[0];
+  const formattedDate = todayDate.toISOString();
 
   const conditions: PrismaTravelBuddiesConditionTs[] = [
     {
@@ -218,7 +216,6 @@ const findBuddies = async (c: Context) => {
           username_slug: true,
           full_name: true,
           avatar_url: true,
-          profile_picture: true,
         },
       },
     },
@@ -239,7 +236,7 @@ const findBuddies = async (c: Context) => {
   };
 };
 
-const fullUserProfile = async (c: Context) => {
+const viewUserProfile = async (c: Context) => {
   const id = c.req.param("id") as string;
 
   if (id?.length === 0) {
@@ -267,6 +264,7 @@ const fullUserProfile = async (c: Context) => {
           slug: true,
           travel_type: true,
           image: true,
+          status: true,
         },
       },
     },
@@ -290,7 +288,7 @@ const fullUserProfile = async (c: Context) => {
 const canUserCreateTrip = async (c: Context) => {
   const id = c.req.param("id") as string;
   const todayDate = new Date();
-  const formattedDate = todayDate.toISOString().split("T")[0];
+  const formattedDate = todayDate.toISOString();
   const data = await Prisma.travel_plans.findMany({
     where: {
       user_id: id,
@@ -324,13 +322,55 @@ export const updateTripStatus = async (c: Context) => {
   }
 };
 
+const getUserFullProfile = async (c: Context) => {
+  const supabase = getSupabase(c);
+  const { data: user } = await supabase.auth.getUser();
+
+  const data = await Prisma.profiles.findUnique({
+    where: {
+      id: user?.user?.id,
+    },
+    include: {
+      travel_plans: {
+        select: {
+          end_date: true,
+          start_date: true,
+          title: true,
+          country: true,
+          city: true,
+          tags: true,
+          slug: true,
+          travel_type: true,
+          image: true,
+          status: true,
+        },
+      },
+    },
+  });
+
+  if (!data) {
+    return {
+      success: false,
+      code: 500,
+      data: null,
+      message: "User profile not found",
+    };
+  }
+  return {
+    success: true,
+    code: 200,
+    data: data,
+  };
+};
+
 export const getDataService = {
   getUserData,
   getCountryLists,
   getTripLists,
   getTripListById,
   findBuddies,
-  fullUserProfile,
+  viewUserProfile,
   canUserCreateTrip,
   updateTripStatus,
+  getUserFullProfile,
 };

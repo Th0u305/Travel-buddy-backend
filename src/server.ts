@@ -1,10 +1,15 @@
 import { app } from "./app.ts";
 import { envVars } from "./app/config/env.ts";
+import { connectRedis } from "./app/config/redis.config.ts";
 
 // 1. Create an AbortController to signal the server to stop
 const controller = new AbortController();
 
 // 2. Start the server with the abort signal
+
+(async () => {
+  await connectRedis()
+})()
 
 const server = Deno.serve(
   { port: Number(envVars.PORT) }, app.fetch

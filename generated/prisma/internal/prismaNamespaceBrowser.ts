@@ -101,7 +101,6 @@ export const ProfilesScalarFieldEnum = {
   stripe_customer_id: 'stripe_customer_id',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  profile_picture: 'profile_picture',
   email: 'email',
   visited_countries: 'visited_countries',
   travel_interests: 'travel_interests',
