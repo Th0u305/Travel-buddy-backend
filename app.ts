@@ -10,8 +10,8 @@ app.use("/api/v1/*", cors({
   origin : envVars.FRONTEND_HOST,
   credentials : true,
   allowMethods : ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowHeaders : ["Content-Type", "Authorization", "X-Custom-Header"],
-  exposeHeaders : ["Content-Length", "X-Response-Time"],
+  allowHeaders : ["Content-Type", "Authorization"],
+  exposeHeaders : ["Content-Length"],
   maxAge : 600,
 }))
 
