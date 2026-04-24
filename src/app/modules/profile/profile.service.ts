@@ -1,7 +1,6 @@
 import { Context } from "hono";
 import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
 import { Prisma } from "../../lib/prisma.ts";
-import { PrismaProfileConditionTs } from "../../types/types.ts";
 
 const updateProfile = async (c: Context) => {
   const supabase = getSupabase(c);

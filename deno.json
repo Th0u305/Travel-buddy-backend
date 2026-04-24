@@ -7,7 +7,8 @@
     "hono": "npm:hono@^4.12.12",
     "pg": "npm:pg@^8.20.0",
     "prisma": "npm:prisma@^7.7.0",
-    "supabase": "npm:supabase@^2.90.1"
+    "supabase": "npm:supabase@^2.90.1",
+    "redis" : "npm:redis@^5.12.1"
   },
   "tasks": {
     "start": "deno run -A --env=.env src/server.ts",

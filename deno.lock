@@ -5474,11 +5474,18 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:@prisma/adapter-pg@^7.7.0",
+        "npm:@prisma/client@^7.7.0",
+        "npm:@supabase/ssr@0.9",
+        "npm:@supabase/supabase-js@^2.103.0",
         "npm:@types/pg@^8.20.0",
         "npm:bcryptjs@^3.0.3",
+        "npm:hono@^4.12.12",
         "npm:nodemailer@^8.0.5",
+        "npm:pg@^8.20.0",
         "npm:prisma@^7.7.0",
         "npm:redis@^5.12.1",
+        "npm:supabase@^2.90.1",
         "npm:uuid@13"
       ]
     }
