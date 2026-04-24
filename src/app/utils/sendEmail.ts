@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import nodemailer from "nodemailer";
 import { envVars } from "../config/env.ts";
 import { Buffer } from "node:buffer";
