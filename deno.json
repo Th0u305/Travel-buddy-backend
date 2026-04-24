@@ -22,7 +22,6 @@
   },
   "compilerOptions": {
     "jsx": "precompile",
-    "jsxImportSource": "hono/jsx",
-    "exports": "./server.ts"
+    "jsxImportSource": "hono/jsx"
   }
 }
