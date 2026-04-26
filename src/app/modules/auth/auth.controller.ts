@@ -74,10 +74,31 @@ const resetPassword = catchAsync(
   },
 );
 
+const exchangeResetToken = catchAsync(
+  async (c) => {
+    const data = await authService.exchangeResetToken(c);
+    return c.json({
+      data,
+    });
+  }
+)
+
+const resetUpdatePassword = catchAsync(
+  async (c) => {
+    const data = await authService.resetUpdatePassword(c);
+    return c.json({
+      data,
+    });
+  }
+)
+
+
 export const authController = {
   registerUser,
   logInUser,
   logOutUser,
   googleLogin,
   resetPassword,
+  exchangeResetToken,
+  resetUpdatePassword,
 };

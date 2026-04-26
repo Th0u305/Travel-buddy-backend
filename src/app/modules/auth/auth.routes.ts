@@ -9,3 +9,5 @@ authRoutes.post("/login", isUserLoggedIn(), authController.logInUser);
 authRoutes.get("/logout", authGuard(), authController.logOutUser);
 authRoutes.get("/googleLogin", authController.googleLogin);
 authRoutes.post("/resetPassword", authController.resetPassword);
+authRoutes.post("/exchange-reset-token", authController.exchangeResetToken);
+authRoutes.put("/reset-update-password", authController.resetUpdatePassword);

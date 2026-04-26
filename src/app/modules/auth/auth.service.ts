@@ -1,8 +1,9 @@
 import { envVars } from "../../config/env.ts";
 import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
 import { Context } from "hono";
-import { slugify } from "../../utils/slugify.ts";
-import { Prisma } from "../../lib/prisma.ts";
+import { setCookie } from "hono/cookie";
+import { Buffer } from "node:buffer";
+import { createClient } from "@supabase/supabase-js";
 
 const registerUser = async (c: Context) => {
   const body = await c.req.json();
@@ -19,18 +20,14 @@ const registerUser = async (c: Context) => {
     };
   }
 
-  const { data: isPhoneExists } = await supabase
-    .from("profiles ")
-    .select("phone")
-    .eq("phone", `+${phone_number}`)
-    .single();
   const { data: isUserExists } = await supabase
     .from("profiles ")
-    .select("email")
+    .select("phone , email")
+    .eq("phone", `+${phone_number}`)
     .eq("email", email)
     .single();
 
-  if (isPhoneExists?.phone === `+${phone_number}`) {
+  if (isUserExists?.phone === `+${phone_number}`) {
     return {
       code: "phone_number_error",
       status: 422,
@@ -43,23 +40,6 @@ const registerUser = async (c: Context) => {
     };
   }
 
-  const slugData = slugify(name);
-  let slugs = slugData;
-  let count = 1;
-  while (true) {
-    const isExists = await Prisma.profiles.findUnique({
-      where: {
-        username_slug: slugs,
-      },
-    });
-    if (isExists) {
-      count++;
-      slugs = `${slugData}-${count}`;
-    } else {
-      break;
-    }
-  }
-
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
@@ -68,6 +48,7 @@ const registerUser = async (c: Context) => {
         full_name: name,
         phone: `+${phone_number}`,
         country: country,
+        is_password : true,
       },
     },
   });
@@ -137,9 +118,9 @@ const googleLogin = async (c: Context) => {
 };
 
 const resetPassword = async (c: Context) => {
-  const { email, password } = await c.req.json();
+  const { email } = await c.req.json();
 
-  const supabase = getSupabase(c);
+  const supabase = createClient(envVars.SUPABASE_URL, envVars.PUBLISHABLE_KEY)
 
   const isUndefined = supabase === undefined;
 
@@ -158,14 +139,94 @@ const resetPassword = async (c: Context) => {
   if (!data || data === null) {
     return {
       message: "This email address is not registered",
+      status: 404,
+      success: false,
+    };
+  }
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:3000/auth/reset-password",
+  });
+
+  if (error) {
+    return {
+      message: "Something went wrong",
+      status: 500,
+      success: false,
+    };
+  }
+
+  return {
+    message: "Check your email for the reset link",
+    status: 200,
+    success: true,
+  };
+};
+
+const exchangeResetToken = async (c: Context) => {
+  const { access_token, refresh_token } = await c.req.json();
+
+  const supabase = getSupabase(c);
+
+  const isUndefined = supabase === undefined;
+
+  if (isUndefined) {
+    return {
+      message: "Supabase Client is undefined",
+    };
+  }
+
+  if (!access_token) {
+    return {
+      message: "Invalid token",
       status: 400,
       success: false,
     };
   }
 
-  const { error: updatePasswordError } = await supabase.auth.updateUser({
-    password: password,
+  const { data: session, error } = await supabase.auth.setSession({
+    access_token,
+    refresh_token: refresh_token || "",
+  })
+
+  const sessionString = JSON.stringify(session);
+  const encoded = encodeURIComponent(
+    Buffer.from(sessionString, "utf-8").toString("base64"),
+  );
+
+  setCookie(c, "sb_session", encoded, {
+    httpOnly: true,
+    sameSite: "Lax",
+    maxAge: 60 * 2, // 2 minutes
+    path: "/",
   });
+
+  if (error) {
+    return {
+      message: "Invalid token",
+      status: 400,
+      success: false,
+    };
+  }
+
+  return {
+    message: "Token exchanged successfully",
+    status: 200,
+    success: true,
+  };
+};
+
+const resetUpdatePassword = async (c: Context) => {
+  const { password } = await c.req.json();
+  const supabase = getSupabase(c);
+
+  const isUndefined = supabase === undefined;
+  if (isUndefined) {
+    return {
+      message: "Supabase Client is undefined",
+    };
+  }
+
+  const { error: updatePasswordError } = await supabase.auth.updateUser({password: password});
 
   if (
     updatePasswordError?.code === "same_password" &&
@@ -178,8 +239,24 @@ const resetPassword = async (c: Context) => {
     };
   }
 
+  if (updatePasswordError) {
+    return {
+      message: "Something went wrong",
+      status: 500,
+      success: false,
+    };
+  }
+  
+  setCookie(c, "sb_session", "", {
+    httpOnly: true,
+    sameSite: "Lax",
+    maxAge: 60 * 2, // 2 minutes
+    path: "/",
+  });
+  logOutUser(c);
+
   return {
-    message: "Password reset successfully",
+    message: "Password updated successfully",
     status: 200,
     success: true,
   };
@@ -191,4 +268,6 @@ export const authService = {
   logOutUser,
   googleLogin,
   resetPassword,
+  exchangeResetToken,
+  resetUpdatePassword,
 };

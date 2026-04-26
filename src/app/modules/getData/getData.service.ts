@@ -11,7 +11,7 @@ const getUserData = async (c: Context) => {
   const { data, error } = await supabase.auth.getUser();
   const { data: user } = await supabase
     .from("profiles")
-    .select("full_name, email, avatar_url, username_slug, id")
+    .select("full_name, email, avatar_url, username_slug, id, providers, is_password")
     .eq("id", data?.user?.id)
     .single();
   if (error) {
