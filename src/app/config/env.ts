@@ -16,6 +16,7 @@ interface EnvConfig {
   MAIL_SMTP_USER: string;
   MAIL_SMTP_PORT: string;
   MAIL_SMTP_HOST: string;
+  STRIPE_SECRET_KEY: string;
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -37,6 +38,7 @@ const loadEnvVariables = (): EnvConfig => {
     "MAIL_SMTP_USER",
     "MAIL_SMTP_PORT",
     "MAIL_SMTP_HOST",
+    "STRIPE_SECRET_KEY",
   ];
 
   requireEnvVariable.forEach((variable) => {
@@ -67,6 +69,7 @@ const loadEnvVariables = (): EnvConfig => {
     MAIL_SMTP_USER: Deno.env.get("MAIL_SMTP_USER") as string,
     MAIL_SMTP_PORT: Deno.env.get("MAIL_SMTP_PORT") as string,
     MAIL_SMTP_HOST: Deno.env.get("MAIL_SMTP_HOST") as string,
+    STRIPE_SECRET_KEY: Deno.env.get("STRIPE_SECRET_KEY") as string,
   };
 };
 

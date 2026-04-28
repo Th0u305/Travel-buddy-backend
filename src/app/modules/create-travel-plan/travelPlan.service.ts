@@ -46,18 +46,6 @@ const createTravelPlan = async (c: Context) => {
       slug: slugs,
     },
   });
-  await Prisma.profiles.update({
-    where: {
-      id: `${userId.data.user?.id}`,
-    },
-    data: {
-      travel_plans: {
-        connect: {
-          id: data.id,
-        },
-      },
-    },
-  });
   return data;
 };
 

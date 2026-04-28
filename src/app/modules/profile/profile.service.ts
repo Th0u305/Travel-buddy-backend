@@ -3,9 +3,8 @@ import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
 import { Prisma } from "../../lib/prisma.ts";
 
 const updateProfile = async (c: Context) => {
-
   const body = await c.req.json();
-  const { user_id, image, bio, travel_interests, country } = body;
+  const { user_id, image, bio, travel_interests, country, phone_number } = body;
 
   const user = await Prisma.profiles.findUnique({
     where: {
@@ -22,22 +21,50 @@ const updateProfile = async (c: Context) => {
     };
   }
 
+  const dataPayload: Record<string, unknown> = {};
+
+  if (typeof image === "string" && image.trim() !== "") {
+    dataPayload.avatar_url = image.trim();
+  }
+
+  if (typeof bio === "string" && bio.trim() !== "") {
+    dataPayload.bio = bio.trim();
+  }
+
+  if (typeof travel_interests === "string" && travel_interests.trim() !== "") {
+    dataPayload.travel_interests = travel_interests
+      .split(",")
+      .map((i: string) => i.trim())
+      .filter((i: string) => i !== "");
+  }
+
+  if (typeof country === "string" && country.trim() !== "") {
+    dataPayload.country = country.trim();
+  }
+
+  if (typeof phone_number === "string" && phone_number.trim() !== "") {
+    dataPayload.phone = "+" + phone_number.trim();
+  }
+
+  const isPhone = await Prisma.profiles.findUnique({
+    where: {
+      phone: "+" + phone_number,
+    },
+  })
+
+  if (isPhone) {
+    return {
+      success: false,
+      status: 409,
+      message: "Phone number already exists",
+      data: null,
+    };
+  }
   const data = await Prisma.profiles.update({
     where: {
       id: user_id,
     },
-    data: {
-      ...(image ? { avatar_url: image.trim() } : {}),
-      ...(bio ? { bio: bio.trim() } : {}),
-      ...(travel_interests.length > 0
-        ? {
-          travel_interests: travel_interests.split(",").map((i: string) =>
-            i.trim()
-          ).filter((i: string) => i !== ""),
-        }
-        : {}),
-      ...(country ? { country: country.trim() } : {}),
-    },
+    data: dataPayload,
   });
 
   if (!data) {

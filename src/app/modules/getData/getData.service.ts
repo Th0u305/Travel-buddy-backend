@@ -11,7 +11,7 @@ const getUserData = async (c: Context) => {
   const { data, error } = await supabase.auth.getUser();
   const { data: user } = await supabase
     .from("profiles")
-    .select("full_name, email, avatar_url, username_slug, id, providers, is_password")
+    .select("full_name, email, avatar_url, username_slug, id, providers, is_password, subscription_tier, subscription_plan, subscription_expires_at")
     .eq("id", data?.user?.id)
     .single();
   if (error) {
@@ -44,10 +44,16 @@ const getCountryLists = async (c: Context) => {
       message: "Country lists not found",
     };
   }
+
+  const serializedData = data.map((country) => ({
+    ...country,
+    id: country.id.toString(),
+  }));
+
   return {
     success: true,
     code: 200,
-    data: data,
+    data: serializedData,
   };
 };
 
@@ -289,6 +295,12 @@ const canUserCreateTrip = async (c: Context) => {
   const id = c.req.param("id") as string;
   const todayDate = new Date();
   const formattedDate = todayDate.toISOString();
+
+  const userPlan = await Prisma.profiles.findUnique({
+    where: { id: id },
+    select: { subscription_tier: true },
+  });
+
   const data = await Prisma.travel_plans.findMany({
     where: {
       user_id: id,
@@ -301,14 +313,24 @@ const canUserCreateTrip = async (c: Context) => {
     },
   });
 
+  let limitReached = 0;
+  if (userPlan?.subscription_tier === "Premium") {
+    limitReached = 0; 
+  } else {
+    limitReached = data.length;
+  }
+
   return {
     success: true,
     code: 200,
-    data: data.length,
+    data: {
+      canCreate: data.length,
+      tripLimit : limitReached
+    },
   };
 };
 
-export const updateTripStatus = async (c: Context) => {
+const updateTripStatus = async (c: Context) => {
   const supabase = getSupabase(c);
 
   const { data, error } = await supabase.rpc("bulk_update_trip_statuses");

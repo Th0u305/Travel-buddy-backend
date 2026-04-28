@@ -93,6 +93,15 @@ const resetUpdatePassword = catchAsync(
 )
 
 
+const updatePassword = catchAsync(
+  async (c) => {
+    const data = await authService.updatePassword(c);
+    return c.json({
+      data,
+    });
+  }
+)
+
 export const authController = {
   registerUser,
   logInUser,
@@ -101,4 +110,5 @@ export const authController = {
   resetPassword,
   exchangeResetToken,
   resetUpdatePassword,
+  updatePassword,
 };

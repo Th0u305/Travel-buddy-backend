@@ -262,6 +262,45 @@ const resetUpdatePassword = async (c: Context) => {
   };
 };
 
+const updatePassword = async (c: Context) => {
+  const { password } = await c.req.json();
+  const supabase = getSupabase(c);
+
+  const isUndefined = supabase === undefined;
+  if (isUndefined) {
+    return {
+      message: "Supabase Client is undefined",
+    };
+  }
+
+  const { error: updatePasswordError } = await supabase.auth.updateUser({password: password});
+
+  if (
+    updatePasswordError?.code === "same_password" &&
+    updatePasswordError?.status === 422
+  ) {
+    return {
+      message: "Your old password and new password are the same",
+      status: 422,
+      success: false,
+    };
+  }
+
+  if (updatePasswordError) {
+    return {
+      message: "Something went wrong",
+      status: 500,
+      success: false,
+    };
+  }
+  
+  return {
+    message: "Password updated successfully",
+    status: 200,
+    success: true,
+  };
+};
+
 export const authService = {
   registerUser,
   logInUser,
@@ -270,4 +309,5 @@ export const authService = {
   resetPassword,
   exchangeResetToken,
   resetUpdatePassword,
+  updatePassword,
 };

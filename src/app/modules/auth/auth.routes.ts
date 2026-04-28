@@ -11,3 +11,4 @@ authRoutes.get("/googleLogin", authController.googleLogin);
 authRoutes.post("/resetPassword", authController.resetPassword);
 authRoutes.post("/exchange-reset-token", authController.exchangeResetToken);
 authRoutes.put("/reset-update-password", authController.resetUpdatePassword);
+authRoutes.put("/update-password", authGuard(), authController.updatePassword);

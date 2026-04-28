@@ -5,6 +5,7 @@ import { getData } from "../app/modules/getData/getData.routes.ts";
 import { travelPlanRoutes } from "../app/modules/create-travel-plan/travelPlan.route.ts";
 import { OtpRoutes } from "../app/modules/otp/otp.routes.ts";
 import { profileRoutes } from "../app/modules/profile/profile.route.ts";
+import { paymentRoutes } from "../app/payment/payment.route.ts";
 
 export const customRoutes = new Hono();
 
@@ -14,3 +15,4 @@ customRoutes.route("/getData", getData);
 customRoutes.route("/travel-plan", travelPlanRoutes);
 customRoutes.route("/otp", OtpRoutes);
 customRoutes.route("/profile", profileRoutes);
+customRoutes.route("/payment", paymentRoutes);

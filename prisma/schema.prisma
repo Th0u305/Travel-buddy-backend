@@ -34,7 +34,7 @@ model profiles {
   is_verified             Boolean?     @default(false)
   subscription_tier       String?
   subscription_expires_at DateTime?    @db.Timestamptz(6)
-  stripe_customer_id      String?
+  subscription_plan       String?
   created_at              DateTime?    @default(now()) @db.Timestamptz(6)
   updated_at              DateTime?    @default(now()) @db.Timestamptz(6)
   email                   String       @unique @default("")
@@ -45,8 +45,9 @@ model profiles {
   phone                   String?      @unique(map: "profiles_phone_number_key") @default("")
   providers               String[]
   is_password             Boolean?
-  travel_plans_id         String[]     @unique
-  username_slug           String?      @unique
+  username_slug           String?      @unique(map: "profiles_slug_key")
+  deleted_log             deleted_log?
+  payments                payments[]
   travel_plans            travel_plans[]
 
   @@schema("public")
@@ -76,7 +77,7 @@ model travel_plans {
   max_budget        Int?
   looking_for_buddy Boolean?         @default(true)
   max_buddies       Int?             @default(1)
-  status            String?          
+  status            String?          @default("active")
   created_at        DateTime?        @default(now()) @db.Timestamptz(6)
   updated_at        DateTime?        @default(now()) @db.Timestamptz(6)
   travel_type       String?
@@ -85,21 +86,46 @@ model travel_plans {
   country           String
   city              String
   slug              String?          @unique
+  participantsId    String[]
   buddy_requests    buddy_requests[]
   reviews           reviews[]
-  participantsId    String[]
-  profiles          profiles? @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  profiles          profiles         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
 
-model country_lists{
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name String
-  iso2 String
-  iso3 String
-  phoneCode String
-  region String
+model country_lists {
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  name       String?  @unique
+  iso2       String?  @unique
+  iso3       String?  @unique
+  phoneCode  String?
+  region     String?
+
+  @@schema("public")
+}
+
+
+model deleted_log {
+  deleted_id     String   @id @db.Uuid
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  user_email     String?
+  is_deleted     Boolean? @default(false)
+  deleted_reason String?
+  profiles       profiles @relation(fields: [deleted_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model payments {
+  id             BigInt    @id @default(autoincrement())
+  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @db.Timestamptz(6)
+  user_id        String?   @db.Uuid
+  transaction_id String[]
+  status         String?   @db.VarChar
+  profiles       profiles? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
