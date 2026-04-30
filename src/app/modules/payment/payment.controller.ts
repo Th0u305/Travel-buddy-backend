@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { catchAsync } from "../utils/catchAsync.ts";
+import { catchAsync } from "../../utils/catchAsync.ts";
 import { paymentService } from "./payment.service.ts";
 
 const createCheckoutSession = catchAsync(async (c: Context) => {

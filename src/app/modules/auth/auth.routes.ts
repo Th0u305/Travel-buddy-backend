@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 import { authController } from "./auth.controller.ts";
 import { authGuard, isUserLoggedIn } from "../../middleware/authGuard.ts";
+import { rateLimitPresets } from "../../middleware/rateLimiter_middleware.ts";
 
 export const authRoutes = new Hono();
 
+authRoutes.use(rateLimitPresets.auth)
 authRoutes.post("/register", authController.registerUser);
 authRoutes.post("/login", isUserLoggedIn(), authController.logInUser);
 authRoutes.get("/logout", authGuard(), authController.logOutUser);

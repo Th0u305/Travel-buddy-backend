@@ -49,6 +49,145 @@ const createTravelPlan = async (c: Context) => {
   return data;
 };
 
+const joinTrip = async (c: Context) => {
+  const body = await c.req.json();
+
+  const travelData = await Prisma.travel_plans.findUnique({
+    where: {
+      slug: body.slug,
+    },
+  });
+
+  if(!travelData){
+    return {
+      success : false,
+      message : "You can not join the trip because the trip is not found",
+      status : 404
+    }
+  }
+  if(travelData.status === "ongoing"){
+    return {
+      success : false,
+      message : "You can not join the trip because the trip is already started",
+      status : 400
+    }
+  }
+
+  if (travelData.travel_type === "Solo") {
+    return {
+      success : false,
+      message : "You can not join the trip because this travel plan is only for solo travelers",
+      status : 400
+    }
+  }
+
+  if(travelData.participantsId.includes(body.userId)){
+    return {
+      success : false,
+      message : "You have already joined this trip",
+      status : 400
+    }
+  }
+
+  if(travelData.max_buddies === travelData.participantsId.length){
+    return {
+      success : false,
+      message : "You can not join the trip because the trip is already full",
+      status : 400
+    }
+  }
+
+  if (travelData.user_id === body.userId) {
+    return {
+      success : false,
+      message : "You can not join the trip because you are the creator of the trip",
+      status : 400
+    }
+  }
+
+  const data = await Prisma.travel_plans.update({
+    where: {
+      slug: body.slug,
+    },
+    data: {
+      participantsId: {
+        push: body.userId
+      }
+    },
+  });
+
+  if (!data) {
+    return {
+      success : false,
+      message : "Something went wrong",
+      status : 500
+    }
+  }
+
+  return {
+    success : true,
+    message : "You have successfully joined the trip",
+    status : 200,
+    data : data
+  };
+};
+
+const removeFromTrip = async (c: Context) => {
+  const body = await c.req.json();
+
+  const travelData = await Prisma.travel_plans.findUnique({
+    where: {
+      slug: body.slug,
+    },
+  });
+
+  if(!travelData){
+    return {
+      success : false,
+      message : "Trip not found",
+      status : 404
+    }
+  }
+
+  if(!travelData.participantsId.includes(body.userId)){
+    return {
+      success : false,
+      message : "You have not joined this trip",
+      status : 400
+    }
+  }
+
+  const updatedParticipants = travelData.participantsId.filter(id => id !== body.userId);
+
+  const data = await Prisma.travel_plans.update({
+    where: {
+      slug: body.slug,
+    },
+    data: {
+      participantsId: {
+        set: updatedParticipants
+      }
+    },
+  });
+
+  if (!data) {
+    return {
+      success : false,
+      message : "Something went wrong",
+      status : 500
+    }
+  }
+
+  return {
+    success : true,
+    message : "You have successfully left the trip",
+    status : 200,
+    data : data
+  };
+};
+
 export const travelPlanService = {
   createTravelPlan,
+  joinTrip,
+  removeFromTrip,
 };

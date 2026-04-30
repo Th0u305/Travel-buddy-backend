@@ -17,6 +17,8 @@ interface EnvConfig {
   MAIL_SMTP_PORT: string;
   MAIL_SMTP_HOST: string;
   STRIPE_SECRET_KEY: string;
+  UPSTASH_REDIS_REST_TOKEN: string
+  UPSTASH_REDIS_REST_URL: string
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -39,6 +41,8 @@ const loadEnvVariables = (): EnvConfig => {
     "MAIL_SMTP_PORT",
     "MAIL_SMTP_HOST",
     "STRIPE_SECRET_KEY",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "UPSTASH_REDIS_REST_URL"
   ];
 
   requireEnvVariable.forEach((variable) => {
@@ -70,6 +74,8 @@ const loadEnvVariables = (): EnvConfig => {
     MAIL_SMTP_PORT: Deno.env.get("MAIL_SMTP_PORT") as string,
     MAIL_SMTP_HOST: Deno.env.get("MAIL_SMTP_HOST") as string,
     STRIPE_SECRET_KEY: Deno.env.get("STRIPE_SECRET_KEY") as string,
+    UPSTASH_REDIS_REST_TOKEN: Deno.env.get("UPSTASH_REDIS_REST_TOKEN") as string,
+    UPSTASH_REDIS_REST_URL : Deno.env.get("UPSTASH_REDIS_REST_URL") as string
   };
 };
 

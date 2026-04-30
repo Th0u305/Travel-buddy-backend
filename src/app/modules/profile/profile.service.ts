@@ -32,10 +32,14 @@ const updateProfile = async (c: Context) => {
   }
 
   if (typeof travel_interests === "string" && travel_interests.trim() !== "") {
-    dataPayload.travel_interests = travel_interests
-      .split(",")
-      .map((i: string) => i.trim())
-      .filter((i: string) => i !== "");
+    if (travel_interests === "clear_all") {
+      dataPayload.travel_interests = [];
+    } else {
+      dataPayload.travel_interests = travel_interests
+        .split(",")
+        .map((i: string) => i.trim())
+        .filter((i: string) => i !== "");
+    }
   }
 
   if (typeof country === "string" && country.trim() !== "") {
@@ -65,6 +69,22 @@ const updateProfile = async (c: Context) => {
       id: user_id,
     },
     data: dataPayload,
+    include: {
+      travel_plans: {
+        select: {
+          end_date: true,
+          start_date: true,
+          title: true,
+          country: true,
+          city: true,
+          tags: true,
+          slug: true,
+          travel_type: true,
+          image: true,
+          status: true,
+        },
+      },
+    },
   });
 
   if (!data) {

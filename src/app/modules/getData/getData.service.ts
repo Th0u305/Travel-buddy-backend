@@ -11,15 +11,32 @@ const getUserData = async (c: Context) => {
   const { data, error } = await supabase.auth.getUser();
   const { data: user } = await supabase
     .from("profiles")
-    .select("full_name, email, avatar_url, username_slug, id, providers, is_password, subscription_tier, subscription_plan, subscription_expires_at")
+    .select("*")
     .eq("id", data?.user?.id)
     .single();
+
+  const completed = user.bio.length || user.phone || user.country || user.travel_interests 
+  
+  const userData = {
+    id: user?.id,
+    full_name: user.full_name,
+    email: user.email,
+    avatar_url: user.avatar_url,
+    username_slug: user.username_slug,
+    providers: user.providers,
+    is_password: user.is_password,
+    subscription_tier: user.subscription_tier,
+    subscription_plan: user.subscription_plan,
+    subscription_expires_at: user.subscription_expires_at,
+    is_profile_completed : completed  ? true : false
+  }
+  
   if (error) {
     throw error;
   }
   return {
     success: true,
-    data: user,
+    data: userData,
   };
 };
 
@@ -83,7 +100,10 @@ const getTripLists = async (c: Context) => {
     take: 12,
     skip: (Number(page) - 1) * 10,
 
-    where: conditions.length > 0 ? { AND: conditions } : {},
+    where: {
+      ...conditions.length > 0 ? { AND: conditions } : {},
+      status: "upcoming",
+    },
 
     include: {
       profiles: {
@@ -144,10 +164,29 @@ const getTripListById = async (c: Context) => {
       message: "Trip list not found",
     };
   }
+
+  let participants_info: { avatar_url: string | null; username_slug: string | null }[] = [];
+  if (data.participantsId && data.participantsId.length > 0) {
+    participants_info = await Prisma.profiles.findMany({
+      where: {
+        id: {
+          in: data.participantsId,
+        },
+      },
+      select: {
+        avatar_url: true,
+        username_slug: true,
+      },
+    });
+  }
+
   return {
     success: true,
     code: 200,
-    data: data,
+    data: {
+      ...data,
+      participants_info,
+    },
   };
 };
 

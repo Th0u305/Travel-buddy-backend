@@ -1,8 +1,8 @@
 import Stripe from "stripe";
 import { Context } from "hono";
-import { envVars } from "../config/env.ts";
-import { getSupabase } from "../middleware/supabase_auth_middleware.ts";
-import { Prisma } from "../lib/prisma.ts";
+import { envVars } from "../../config/env.ts";
+import { getSupabase } from "../../middleware/supabase_auth_middleware.ts";
+import { Prisma } from "../../lib/prisma.ts";
 
 const stripe = new Stripe(envVars.STRIPE_SECRET_KEY);
 
