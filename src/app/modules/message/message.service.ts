@@ -105,6 +105,7 @@ const getMessageHistory = async (c: Context) => {
   });
 
   let roomId = receiverRoom?.room_id;
+  // deno-lint-ignore no-explicit-any
   let messages: any[] = [];
 
   if (roomId) {

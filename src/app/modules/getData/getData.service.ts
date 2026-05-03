@@ -78,6 +78,8 @@ const getTripLists = async (c: Context) => {
   const page = c.req.query("page") || "1";
   const search = c.req.query("search") || "";
   const travelType = c.req.query("travelType") || "";
+  const limitStr = c.req.query("limit") || "12";
+  const limit = Number(limitStr);
 
   const conditions: PrismaTripConditionTs[] = [];
 
@@ -97,8 +99,8 @@ const getTripLists = async (c: Context) => {
   }
 
   const data = await Prisma.travel_plans.findMany({
-    take: 12,
-    skip: (Number(page) - 1) * 10,
+    take: limit,
+    skip: (Number(page) - 1) * limit,
 
     where: {
       ...(conditions.length > 0 ? { AND: conditions } : {}),
@@ -207,7 +209,6 @@ const findBuddies = async (c: Context) => {
   const page = c.req.query("page") || "1";
   const search = c.req.query("search") || "";
   const searchByCountryOrCity = c.req.query("searchByCountryOrCity") || "";
-
   const todayDate = new Date();
   const formattedDate = todayDate.toISOString();
 
@@ -243,7 +244,7 @@ const findBuddies = async (c: Context) => {
       profiles: {
         is: {
           full_name: {
-            contains: search.trim(),
+            contains: search,
             mode: "insensitive",
           },
         },
@@ -256,9 +257,9 @@ const findBuddies = async (c: Context) => {
     skip: (Number(page) - 1) * 12,
     where: {
       AND: conditions,
-      travel_type: {
-        notIn: ["Solo"],
-      },
+      // travel_type: {
+      //   notIn: ["Solo"],
+      // },
     },
     select: {
       end_date: true,
