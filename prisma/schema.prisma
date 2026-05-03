@@ -1,7 +1,9 @@
 generator client {
-  provider        = "prisma-client"
-  output          = "../generated/prisma"
-  previewFeatures = ["partialIndexes"]
+  provider               = "prisma-client"
+  output                 = "../generated/prisma"
+  previewFeatures        = ["partialIndexes"]
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
 }
 
 datasource db {
@@ -25,30 +27,32 @@ model buddy_requests {
 }
 
 model profiles {
-  id                      String       @id @db.Uuid
+  id                      String              @id @db.Uuid
   bio                     String?
   avatar_url              String?
   country                 String?
-  is_admin                Boolean?     @default(false)
-  is_premium              Boolean?     @default(false)
-  is_verified             Boolean?     @default(false)
+  is_admin                Boolean?            @default(false)
+  is_premium              Boolean?            @default(false)
+  is_verified             Boolean?            @default(false)
   subscription_tier       String?
-  subscription_expires_at DateTime?    @db.Timestamptz(6)
+  subscription_expires_at DateTime?           @db.Timestamptz(6)
   subscription_plan       String?
-  created_at              DateTime?    @default(now()) @db.Timestamptz(6)
-  updated_at              DateTime?    @default(now()) @db.Timestamptz(6)
-  email                   String       @unique @default("")
+  created_at              DateTime?           @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime?           @default(now()) @db.Timestamptz(6)
+  email                   String              @unique @default("")
   visited_countries       String[]
   travel_interests        String[]
-  isDeleted               Boolean      @default(false)
+  isDeleted               Boolean             @default(false)
   full_name               String?
-  phone                   String?      @unique(map: "profiles_phone_number_key") @default("")
+  phone                   String?             @unique(map: "profiles_phone_number_key") @default("")
   providers               String[]
   is_password             Boolean?
-  username_slug           String?      @unique(map: "profiles_slug_key")
+  username_slug           String?             @unique(map: "profiles_slug_key")
+  role                    String?             @default("member")
   deleted_log             deleted_log?
   payments                payments[]
   travel_plans            travel_plans[]
+  room_participants       room_participants[]
 
   @@schema("public")
 }
@@ -106,7 +110,6 @@ model country_lists {
   @@schema("public")
 }
 
-
 model deleted_log {
   deleted_id     String   @id @db.Uuid
   created_at     DateTime @default(now()) @db.Timestamptz(6)
@@ -126,6 +129,79 @@ model payments {
   transaction_id String[]
   status         String?   @db.VarChar
   profiles       profiles? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model message_attachments {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  message_id    String   @db.Uuid
+  file_url      String
+  file_type     String?
+  file_name     String?
+  file_size     BigInt?
+  thumbnail_url String?
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  messages      messages @relation(fields: [message_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model message_reactions {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  message_id String   @db.Uuid
+  user_id    String   @db.Uuid
+  emoji      String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  messages   messages @relation(fields: [message_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([message_id, user_id, emoji])
+  @@schema("public")
+}
+
+model messages {
+  id                                String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  room_id                           String                @db.Uuid
+  sender_id                         String?               @db.Uuid
+  receiver_id                       String?               @db.Uuid
+  content                           String?
+  type                              String?
+  metadata                          Json?                 @default("{}")
+  is_deleted                        Boolean?              @default(false)
+  created_at                        DateTime              @default(now()) @db.Timestamptz(6)
+  updated_at                        DateTime              @default(now()) @db.Timestamptz(6)
+  message_attachments               message_attachments[]
+  message_reactions                 message_reactions[]
+  rooms                             rooms                 @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model room_participants {
+  id           String?   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  room_id      String    @db.Uuid
+  user_id      String    @db.Uuid
+  role         String?
+  last_read_at DateTime? @default(now()) @db.Timestamptz(6)
+  joined_at    DateTime  @default(now()) @db.Timestamptz(6)
+  rooms        rooms     @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  profiles     profiles  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([room_id, user_id])
+  @@schema("public")
+}
+
+model rooms {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at        DateTime            @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime            @default(now()) @db.Timestamptz(6)
+  created_by        String?             @db.Uuid
+  is_group          Boolean             @default(false)
+  name              String?
+  group_image       String?
+  last_message_at   DateTime?           @default(now()) @db.Timestamptz(6)
+  messages          messages[]
+  room_participants room_participants[]
 
   @@schema("public")
 }

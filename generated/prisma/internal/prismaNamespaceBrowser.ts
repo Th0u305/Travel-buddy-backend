@@ -57,7 +57,12 @@ export const ModelName = {
   travel_plans: 'travel_plans',
   country_lists: 'country_lists',
   deleted_log: 'deleted_log',
-  payments: 'payments'
+  payments: 'payments',
+  message_attachments: 'message_attachments',
+  message_reactions: 'message_reactions',
+  messages: 'messages',
+  room_participants: 'room_participants',
+  rooms: 'rooms'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,7 +116,8 @@ export const ProfilesScalarFieldEnum = {
   phone: 'phone',
   providers: 'providers',
   is_password: 'is_password',
-  username_slug: 'username_slug'
+  username_slug: 'username_slug',
+  role: 'role'
 } as const
 
 export type ProfilesScalarFieldEnum = (typeof ProfilesScalarFieldEnum)[keyof typeof ProfilesScalarFieldEnum]
@@ -192,12 +198,87 @@ export const PaymentsScalarFieldEnum = {
 export type PaymentsScalarFieldEnum = (typeof PaymentsScalarFieldEnum)[keyof typeof PaymentsScalarFieldEnum]
 
 
+export const Message_attachmentsScalarFieldEnum = {
+  id: 'id',
+  message_id: 'message_id',
+  file_url: 'file_url',
+  file_type: 'file_type',
+  file_name: 'file_name',
+  file_size: 'file_size',
+  thumbnail_url: 'thumbnail_url',
+  created_at: 'created_at'
+} as const
+
+export type Message_attachmentsScalarFieldEnum = (typeof Message_attachmentsScalarFieldEnum)[keyof typeof Message_attachmentsScalarFieldEnum]
+
+
+export const Message_reactionsScalarFieldEnum = {
+  id: 'id',
+  message_id: 'message_id',
+  user_id: 'user_id',
+  emoji: 'emoji',
+  created_at: 'created_at'
+} as const
+
+export type Message_reactionsScalarFieldEnum = (typeof Message_reactionsScalarFieldEnum)[keyof typeof Message_reactionsScalarFieldEnum]
+
+
+export const MessagesScalarFieldEnum = {
+  id: 'id',
+  room_id: 'room_id',
+  sender_id: 'sender_id',
+  receiver_id: 'receiver_id',
+  content: 'content',
+  type: 'type',
+  metadata: 'metadata',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type MessagesScalarFieldEnum = (typeof MessagesScalarFieldEnum)[keyof typeof MessagesScalarFieldEnum]
+
+
+export const Room_participantsScalarFieldEnum = {
+  id: 'id',
+  room_id: 'room_id',
+  user_id: 'user_id',
+  role: 'role',
+  last_read_at: 'last_read_at',
+  joined_at: 'joined_at'
+} as const
+
+export type Room_participantsScalarFieldEnum = (typeof Room_participantsScalarFieldEnum)[keyof typeof Room_participantsScalarFieldEnum]
+
+
+export const RoomsScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  created_by: 'created_by',
+  is_group: 'is_group',
+  name: 'name',
+  group_image: 'group_image',
+  last_message_at: 'last_message_at'
+} as const
+
+export type RoomsScalarFieldEnum = (typeof RoomsScalarFieldEnum)[keyof typeof RoomsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -214,4 +295,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

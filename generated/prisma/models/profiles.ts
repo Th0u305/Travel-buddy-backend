@@ -43,6 +43,7 @@ export type ProfilesMinAggregateOutputType = {
   phone: string | null
   is_password: boolean | null
   username_slug: string | null
+  role: string | null
 }
 
 export type ProfilesMaxAggregateOutputType = {
@@ -64,6 +65,7 @@ export type ProfilesMaxAggregateOutputType = {
   phone: string | null
   is_password: boolean | null
   username_slug: string | null
+  role: string | null
 }
 
 export type ProfilesCountAggregateOutputType = {
@@ -88,6 +90,7 @@ export type ProfilesCountAggregateOutputType = {
   providers: number
   is_password: number
   username_slug: number
+  role: number
   _all: number
 }
 
@@ -111,6 +114,7 @@ export type ProfilesMinAggregateInputType = {
   phone?: true
   is_password?: true
   username_slug?: true
+  role?: true
 }
 
 export type ProfilesMaxAggregateInputType = {
@@ -132,6 +136,7 @@ export type ProfilesMaxAggregateInputType = {
   phone?: true
   is_password?: true
   username_slug?: true
+  role?: true
 }
 
 export type ProfilesCountAggregateInputType = {
@@ -156,6 +161,7 @@ export type ProfilesCountAggregateInputType = {
   providers?: true
   is_password?: true
   username_slug?: true
+  role?: true
   _all?: true
 }
 
@@ -253,6 +259,7 @@ export type ProfilesGroupByOutputType = {
   providers: string[]
   is_password: boolean | null
   username_slug: string | null
+  role: string | null
   _count: ProfilesCountAggregateOutputType | null
   _min: ProfilesMinAggregateOutputType | null
   _max: ProfilesMaxAggregateOutputType | null
@@ -298,9 +305,11 @@ export type profilesWhereInput = {
   providers?: Prisma.StringNullableListFilter<"profiles">
   is_password?: Prisma.BoolNullableFilter<"profiles"> | boolean | null
   username_slug?: Prisma.StringNullableFilter<"profiles"> | string | null
+  role?: Prisma.StringNullableFilter<"profiles"> | string | null
   deleted_log?: Prisma.XOR<Prisma.Deleted_logNullableScalarRelationFilter, Prisma.deleted_logWhereInput> | null
   payments?: Prisma.PaymentsListRelationFilter
   travel_plans?: Prisma.Travel_plansListRelationFilter
+  room_participants?: Prisma.Room_participantsListRelationFilter
 }
 
 export type profilesOrderByWithRelationInput = {
@@ -325,9 +334,11 @@ export type profilesOrderByWithRelationInput = {
   providers?: Prisma.SortOrder
   is_password?: Prisma.SortOrderInput | Prisma.SortOrder
   username_slug?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted_log?: Prisma.deleted_logOrderByWithRelationInput
   payments?: Prisma.paymentsOrderByRelationAggregateInput
   travel_plans?: Prisma.travel_plansOrderByRelationAggregateInput
+  room_participants?: Prisma.room_participantsOrderByRelationAggregateInput
 }
 
 export type profilesWhereUniqueInput = Prisma.AtLeast<{
@@ -355,9 +366,11 @@ export type profilesWhereUniqueInput = Prisma.AtLeast<{
   full_name?: Prisma.StringNullableFilter<"profiles"> | string | null
   providers?: Prisma.StringNullableListFilter<"profiles">
   is_password?: Prisma.BoolNullableFilter<"profiles"> | boolean | null
+  role?: Prisma.StringNullableFilter<"profiles"> | string | null
   deleted_log?: Prisma.XOR<Prisma.Deleted_logNullableScalarRelationFilter, Prisma.deleted_logWhereInput> | null
   payments?: Prisma.PaymentsListRelationFilter
   travel_plans?: Prisma.Travel_plansListRelationFilter
+  room_participants?: Prisma.Room_participantsListRelationFilter
 }, "id" | "email" | "phone" | "username_slug">
 
 export type profilesOrderByWithAggregationInput = {
@@ -382,6 +395,7 @@ export type profilesOrderByWithAggregationInput = {
   providers?: Prisma.SortOrder
   is_password?: Prisma.SortOrderInput | Prisma.SortOrder
   username_slug?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.profilesCountOrderByAggregateInput
   _max?: Prisma.profilesMaxOrderByAggregateInput
   _min?: Prisma.profilesMinOrderByAggregateInput
@@ -412,6 +426,7 @@ export type profilesScalarWhereWithAggregatesInput = {
   providers?: Prisma.StringNullableListFilter<"profiles">
   is_password?: Prisma.BoolNullableWithAggregatesFilter<"profiles"> | boolean | null
   username_slug?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
+  role?: Prisma.StringNullableWithAggregatesFilter<"profiles"> | string | null
 }
 
 export type profilesCreateInput = {
@@ -436,9 +451,11 @@ export type profilesCreateInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logCreateNestedOneWithoutProfilesInput
   payments?: Prisma.paymentsCreateNestedManyWithoutProfilesInput
   travel_plans?: Prisma.travel_plansCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesUncheckedCreateInput = {
@@ -463,9 +480,11 @@ export type profilesUncheckedCreateInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logUncheckedCreateNestedOneWithoutProfilesInput
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutProfilesInput
   travel_plans?: Prisma.travel_plansUncheckedCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsUncheckedCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesUpdateInput = {
@@ -490,9 +509,11 @@ export type profilesUpdateInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUpdateOneWithoutProfilesNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesUncheckedUpdateInput = {
@@ -517,9 +538,11 @@ export type profilesUncheckedUpdateInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUncheckedUpdateOneWithoutProfilesNestedInput
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUncheckedUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUncheckedUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesCreateManyInput = {
@@ -544,6 +567,7 @@ export type profilesCreateManyInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
 }
 
 export type profilesUpdateManyMutationInput = {
@@ -568,6 +592,7 @@ export type profilesUpdateManyMutationInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type profilesUncheckedUpdateManyInput = {
@@ -592,6 +617,7 @@ export type profilesUncheckedUpdateManyInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -624,6 +650,7 @@ export type profilesCountOrderByAggregateInput = {
   providers?: Prisma.SortOrder
   is_password?: Prisma.SortOrder
   username_slug?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type profilesMaxOrderByAggregateInput = {
@@ -645,6 +672,7 @@ export type profilesMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   is_password?: Prisma.SortOrder
   username_slug?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type profilesMinOrderByAggregateInput = {
@@ -666,6 +694,7 @@ export type profilesMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   is_password?: Prisma.SortOrder
   username_slug?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type ProfilesScalarRelationFilter = {
@@ -757,6 +786,20 @@ export type profilesUpdateOneWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutPaymentsInput, Prisma.profilesUpdateWithoutPaymentsInput>, Prisma.profilesUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type profilesCreateNestedOneWithoutRoom_participantsInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutRoom_participantsInput, Prisma.profilesUncheckedCreateWithoutRoom_participantsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutRoom_participantsInput
+  connect?: Prisma.profilesWhereUniqueInput
+}
+
+export type profilesUpdateOneRequiredWithoutRoom_participantsNestedInput = {
+  create?: Prisma.XOR<Prisma.profilesCreateWithoutRoom_participantsInput, Prisma.profilesUncheckedCreateWithoutRoom_participantsInput>
+  connectOrCreate?: Prisma.profilesCreateOrConnectWithoutRoom_participantsInput
+  upsert?: Prisma.profilesUpsertWithoutRoom_participantsInput
+  connect?: Prisma.profilesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.profilesUpdateToOneWithWhereWithoutRoom_participantsInput, Prisma.profilesUpdateWithoutRoom_participantsInput>, Prisma.profilesUncheckedUpdateWithoutRoom_participantsInput>
+}
+
 export type profilesCreateWithoutTravel_plansInput = {
   id: string
   bio?: string | null
@@ -779,8 +822,10 @@ export type profilesCreateWithoutTravel_plansInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logCreateNestedOneWithoutProfilesInput
   payments?: Prisma.paymentsCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesUncheckedCreateWithoutTravel_plansInput = {
@@ -805,8 +850,10 @@ export type profilesUncheckedCreateWithoutTravel_plansInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logUncheckedCreateNestedOneWithoutProfilesInput
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsUncheckedCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesCreateOrConnectWithoutTravel_plansInput = {
@@ -847,8 +894,10 @@ export type profilesUpdateWithoutTravel_plansInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUpdateOneWithoutProfilesNestedInput
   payments?: Prisma.paymentsUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutTravel_plansInput = {
@@ -873,8 +922,10 @@ export type profilesUncheckedUpdateWithoutTravel_plansInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUncheckedUpdateOneWithoutProfilesNestedInput
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUncheckedUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesCreateWithoutDeleted_logInput = {
@@ -899,8 +950,10 @@ export type profilesCreateWithoutDeleted_logInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   payments?: Prisma.paymentsCreateNestedManyWithoutProfilesInput
   travel_plans?: Prisma.travel_plansCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesUncheckedCreateWithoutDeleted_logInput = {
@@ -925,8 +978,10 @@ export type profilesUncheckedCreateWithoutDeleted_logInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutProfilesInput
   travel_plans?: Prisma.travel_plansUncheckedCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsUncheckedCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesCreateOrConnectWithoutDeleted_logInput = {
@@ -967,8 +1022,10 @@ export type profilesUpdateWithoutDeleted_logInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payments?: Prisma.paymentsUpdateManyWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutDeleted_logInput = {
@@ -993,8 +1050,10 @@ export type profilesUncheckedUpdateWithoutDeleted_logInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payments?: Prisma.paymentsUncheckedUpdateManyWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUncheckedUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUncheckedUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesCreateWithoutPaymentsInput = {
@@ -1019,8 +1078,10 @@ export type profilesCreateWithoutPaymentsInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logCreateNestedOneWithoutProfilesInput
   travel_plans?: Prisma.travel_plansCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesUncheckedCreateWithoutPaymentsInput = {
@@ -1045,8 +1106,10 @@ export type profilesUncheckedCreateWithoutPaymentsInput = {
   providers?: Prisma.profilesCreateprovidersInput | string[]
   is_password?: boolean | null
   username_slug?: string | null
+  role?: string | null
   deleted_log?: Prisma.deleted_logUncheckedCreateNestedOneWithoutProfilesInput
   travel_plans?: Prisma.travel_plansUncheckedCreateNestedManyWithoutProfilesInput
+  room_participants?: Prisma.room_participantsUncheckedCreateNestedManyWithoutProfilesInput
 }
 
 export type profilesCreateOrConnectWithoutPaymentsInput = {
@@ -1087,8 +1150,10 @@ export type profilesUpdateWithoutPaymentsInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUpdateOneWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUpdateManyWithoutProfilesNestedInput
 }
 
 export type profilesUncheckedUpdateWithoutPaymentsInput = {
@@ -1113,7 +1178,137 @@ export type profilesUncheckedUpdateWithoutPaymentsInput = {
   providers?: Prisma.profilesUpdateprovidersInput | string[]
   is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted_log?: Prisma.deleted_logUncheckedUpdateOneWithoutProfilesNestedInput
+  travel_plans?: Prisma.travel_plansUncheckedUpdateManyWithoutProfilesNestedInput
+  room_participants?: Prisma.room_participantsUncheckedUpdateManyWithoutProfilesNestedInput
+}
+
+export type profilesCreateWithoutRoom_participantsInput = {
+  id: string
+  bio?: string | null
+  avatar_url?: string | null
+  country?: string | null
+  is_admin?: boolean | null
+  is_premium?: boolean | null
+  is_verified?: boolean | null
+  subscription_tier?: string | null
+  subscription_expires_at?: Date | string | null
+  subscription_plan?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  email?: string
+  visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
+  travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
+  isDeleted?: boolean
+  full_name?: string | null
+  phone?: string | null
+  providers?: Prisma.profilesCreateprovidersInput | string[]
+  is_password?: boolean | null
+  username_slug?: string | null
+  role?: string | null
+  deleted_log?: Prisma.deleted_logCreateNestedOneWithoutProfilesInput
+  payments?: Prisma.paymentsCreateNestedManyWithoutProfilesInput
+  travel_plans?: Prisma.travel_plansCreateNestedManyWithoutProfilesInput
+}
+
+export type profilesUncheckedCreateWithoutRoom_participantsInput = {
+  id: string
+  bio?: string | null
+  avatar_url?: string | null
+  country?: string | null
+  is_admin?: boolean | null
+  is_premium?: boolean | null
+  is_verified?: boolean | null
+  subscription_tier?: string | null
+  subscription_expires_at?: Date | string | null
+  subscription_plan?: string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  email?: string
+  visited_countries?: Prisma.profilesCreatevisited_countriesInput | string[]
+  travel_interests?: Prisma.profilesCreatetravel_interestsInput | string[]
+  isDeleted?: boolean
+  full_name?: string | null
+  phone?: string | null
+  providers?: Prisma.profilesCreateprovidersInput | string[]
+  is_password?: boolean | null
+  username_slug?: string | null
+  role?: string | null
+  deleted_log?: Prisma.deleted_logUncheckedCreateNestedOneWithoutProfilesInput
+  payments?: Prisma.paymentsUncheckedCreateNestedManyWithoutProfilesInput
+  travel_plans?: Prisma.travel_plansUncheckedCreateNestedManyWithoutProfilesInput
+}
+
+export type profilesCreateOrConnectWithoutRoom_participantsInput = {
+  where: Prisma.profilesWhereUniqueInput
+  create: Prisma.XOR<Prisma.profilesCreateWithoutRoom_participantsInput, Prisma.profilesUncheckedCreateWithoutRoom_participantsInput>
+}
+
+export type profilesUpsertWithoutRoom_participantsInput = {
+  update: Prisma.XOR<Prisma.profilesUpdateWithoutRoom_participantsInput, Prisma.profilesUncheckedUpdateWithoutRoom_participantsInput>
+  create: Prisma.XOR<Prisma.profilesCreateWithoutRoom_participantsInput, Prisma.profilesUncheckedCreateWithoutRoom_participantsInput>
+  where?: Prisma.profilesWhereInput
+}
+
+export type profilesUpdateToOneWithWhereWithoutRoom_participantsInput = {
+  where?: Prisma.profilesWhereInput
+  data: Prisma.XOR<Prisma.profilesUpdateWithoutRoom_participantsInput, Prisma.profilesUncheckedUpdateWithoutRoom_participantsInput>
+}
+
+export type profilesUpdateWithoutRoom_participantsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_premium?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  subscription_tier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subscription_plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
+  travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providers?: Prisma.profilesUpdateprovidersInput | string[]
+  is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_log?: Prisma.deleted_logUpdateOneWithoutProfilesNestedInput
+  payments?: Prisma.paymentsUpdateManyWithoutProfilesNestedInput
+  travel_plans?: Prisma.travel_plansUpdateManyWithoutProfilesNestedInput
+}
+
+export type profilesUncheckedUpdateWithoutRoom_participantsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_admin?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_premium?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  subscription_tier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subscription_plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  visited_countries?: Prisma.profilesUpdatevisited_countriesInput | string[]
+  travel_interests?: Prisma.profilesUpdatetravel_interestsInput | string[]
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  full_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providers?: Prisma.profilesUpdateprovidersInput | string[]
+  is_password?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  username_slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted_log?: Prisma.deleted_logUncheckedUpdateOneWithoutProfilesNestedInput
+  payments?: Prisma.paymentsUncheckedUpdateManyWithoutProfilesNestedInput
   travel_plans?: Prisma.travel_plansUncheckedUpdateManyWithoutProfilesNestedInput
 }
 
@@ -1125,11 +1320,13 @@ export type profilesUncheckedUpdateWithoutPaymentsInput = {
 export type ProfilesCountOutputType = {
   payments: number
   travel_plans: number
+  room_participants: number
 }
 
 export type ProfilesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   payments?: boolean | ProfilesCountOutputTypeCountPaymentsArgs
   travel_plans?: boolean | ProfilesCountOutputTypeCountTravel_plansArgs
+  room_participants?: boolean | ProfilesCountOutputTypeCountRoom_participantsArgs
 }
 
 /**
@@ -1156,6 +1353,13 @@ export type ProfilesCountOutputTypeCountTravel_plansArgs<ExtArgs extends runtime
   where?: Prisma.travel_plansWhereInput
 }
 
+/**
+ * ProfilesCountOutputType without action
+ */
+export type ProfilesCountOutputTypeCountRoom_participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.room_participantsWhereInput
+}
+
 
 export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1179,9 +1383,11 @@ export type profilesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   providers?: boolean
   is_password?: boolean
   username_slug?: boolean
+  role?: boolean
   deleted_log?: boolean | Prisma.profiles$deleted_logArgs<ExtArgs>
   payments?: boolean | Prisma.profiles$paymentsArgs<ExtArgs>
   travel_plans?: boolean | Prisma.profiles$travel_plansArgs<ExtArgs>
+  room_participants?: boolean | Prisma.profiles$room_participantsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profiles"]>
 
@@ -1207,6 +1413,7 @@ export type profilesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   providers?: boolean
   is_password?: boolean
   username_slug?: boolean
+  role?: boolean
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1231,6 +1438,7 @@ export type profilesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   providers?: boolean
   is_password?: boolean
   username_slug?: boolean
+  role?: boolean
 }, ExtArgs["result"]["profiles"]>
 
 export type profilesSelectScalar = {
@@ -1255,13 +1463,15 @@ export type profilesSelectScalar = {
   providers?: boolean
   is_password?: boolean
   username_slug?: boolean
+  role?: boolean
 }
 
-export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "avatar_url" | "country" | "is_admin" | "is_premium" | "is_verified" | "subscription_tier" | "subscription_expires_at" | "subscription_plan" | "created_at" | "updated_at" | "email" | "visited_countries" | "travel_interests" | "isDeleted" | "full_name" | "phone" | "providers" | "is_password" | "username_slug", ExtArgs["result"]["profiles"]>
+export type profilesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "avatar_url" | "country" | "is_admin" | "is_premium" | "is_verified" | "subscription_tier" | "subscription_expires_at" | "subscription_plan" | "created_at" | "updated_at" | "email" | "visited_countries" | "travel_interests" | "isDeleted" | "full_name" | "phone" | "providers" | "is_password" | "username_slug" | "role", ExtArgs["result"]["profiles"]>
 export type profilesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deleted_log?: boolean | Prisma.profiles$deleted_logArgs<ExtArgs>
   payments?: boolean | Prisma.profiles$paymentsArgs<ExtArgs>
   travel_plans?: boolean | Prisma.profiles$travel_plansArgs<ExtArgs>
+  room_participants?: boolean | Prisma.profiles$room_participantsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfilesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type profilesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1273,6 +1483,7 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     deleted_log: Prisma.$deleted_logPayload<ExtArgs> | null
     payments: Prisma.$paymentsPayload<ExtArgs>[]
     travel_plans: Prisma.$travel_plansPayload<ExtArgs>[]
+    room_participants: Prisma.$room_participantsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1296,6 +1507,7 @@ export type $profilesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     providers: string[]
     is_password: boolean | null
     username_slug: string | null
+    role: string | null
   }, ExtArgs["result"]["profiles"]>
   composites: {}
 }
@@ -1693,6 +1905,7 @@ export interface Prisma__profilesClient<T, Null = never, ExtArgs extends runtime
   deleted_log<T extends Prisma.profiles$deleted_logArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$deleted_logArgs<ExtArgs>>): Prisma.Prisma__deleted_logClient<runtime.Types.Result.GetResult<Prisma.$deleted_logPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.profiles$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$paymentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   travel_plans<T extends Prisma.profiles$travel_plansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$travel_plansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$travel_plansPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  room_participants<T extends Prisma.profiles$room_participantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.profiles$room_participantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$room_participantsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1743,6 +1956,7 @@ export interface profilesFieldRefs {
   readonly providers: Prisma.FieldRef<"profiles", 'String[]'>
   readonly is_password: Prisma.FieldRef<"profiles", 'Boolean'>
   readonly username_slug: Prisma.FieldRef<"profiles", 'String'>
+  readonly role: Prisma.FieldRef<"profiles", 'String'>
 }
     
 
@@ -2200,6 +2414,30 @@ export type profiles$travel_plansArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.Travel_plansScalarFieldEnum | Prisma.Travel_plansScalarFieldEnum[]
+}
+
+/**
+ * profiles.room_participants
+ */
+export type profiles$room_participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the room_participants
+   */
+  select?: Prisma.room_participantsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the room_participants
+   */
+  omit?: Prisma.room_participantsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.room_participantsInclude<ExtArgs> | null
+  where?: Prisma.room_participantsWhereInput
+  orderBy?: Prisma.room_participantsOrderByWithRelationInput | Prisma.room_participantsOrderByWithRelationInput[]
+  cursor?: Prisma.room_participantsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Room_participantsScalarFieldEnum | Prisma.Room_participantsScalarFieldEnum[]
 }
 
 /**

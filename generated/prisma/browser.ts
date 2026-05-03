@@ -52,3 +52,28 @@ export type deleted_log = Prisma.deleted_logModel
  * 
  */
 export type payments = Prisma.paymentsModel
+/**
+ * Model message_attachments
+ * 
+ */
+export type message_attachments = Prisma.message_attachmentsModel
+/**
+ * Model message_reactions
+ * 
+ */
+export type message_reactions = Prisma.message_reactionsModel
+/**
+ * Model messages
+ * 
+ */
+export type messages = Prisma.messagesModel
+/**
+ * Model room_participants
+ * 
+ */
+export type room_participants = Prisma.room_participantsModel
+/**
+ * Model rooms
+ * 
+ */
+export type rooms = Prisma.roomsModel

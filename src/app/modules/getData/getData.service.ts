@@ -101,9 +101,15 @@ const getTripLists = async (c: Context) => {
     skip: (Number(page) - 1) * 10,
 
     where: {
-      ...conditions.length > 0 ? { AND: conditions } : {},
-      status: "upcoming",
+      ...(conditions.length > 0 ? { AND: conditions } : {}),
     },
+
+    orderBy: [
+      // upcoming trips come first (0), everything else after (1)
+      {
+        status: "asc", // fallback secondary sort
+      },
+    ],
 
     include: {
       profiles: {
@@ -113,6 +119,12 @@ const getTripLists = async (c: Context) => {
       },
     },
   });
+
+  // Sort in-memory: "upcoming" first, then everything else
+  const sorted = [
+    ...data.filter((t) => t.status === "upcoming"),
+    ...data.filter((t) => t.status !== "upcoming"),
+  ];
 
   if (!data) {
     return {
@@ -125,7 +137,7 @@ const getTripLists = async (c: Context) => {
   return {
     success: true,
     code: 200,
-    data: data,
+    data: sorted,
   };
 };
 
@@ -148,6 +160,7 @@ const getTripListById = async (c: Context) => {
     include: {
       profiles: {
         select: {
+          id:true,
           username_slug: true,
           full_name: true,
           avatar_url: true,
@@ -244,7 +257,7 @@ const findBuddies = async (c: Context) => {
     where: {
       AND: conditions,
       travel_type: {
-        notIn: ["Solo", "Couple"],
+        notIn: ["Solo"],
       },
     },
     select: {
@@ -258,6 +271,7 @@ const findBuddies = async (c: Context) => {
       travel_type: true,
       profiles: {
         select: {
+          id: true,
           username_slug: true,
           full_name: true,
           avatar_url: true,
